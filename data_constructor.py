@@ -29,5 +29,21 @@ def make_item(name, cost, cur, desc):
             "name": name}
 
 def build_items(data):
+    data["items"]["rubber ball"] = make_item("rubber ball", 5, "s", "a medium-sized bright orange rubber ball, it's squishy and squeaky!")
+    data["items"]["sparkle ball"] = make_item("sparkle ball", 5, "g", "a small clear rubber ball filled with colorful sparkling glitter!")
     data["items"]["ball of yarn"] = make_item("ball of yarn", 10, "s", "a ball of yarn, it's red!")
-    data["items"]["scratching post"] = make_item("scratching post", 5, "g", "A post for your cats to scratch!")
+    data["items"]["fancy ball of yarn"] = make_item("fancy ball of yarn", 15, "g", "a fancy ball of yarn, it's red, blue, and green with shimmering silver threads too!")
+    data["items"]["tennis ball"] = make_item("tennis ball", 25, "s", "a tennis ball, it's fuzzy and bright yellow!")
+    data["items"]["paper bag"] = make_item("paper bag", 20, "s", "A paper grocery bag, makes lots of crinkling noises!")
+    data["items"]["scratching post"] = make_item("scratching post", 5, "g", "A nice post for your cats to scratch!")
+    data["items"]["fishbowl"] = make_item("fishbowl", 10, "g", "A small fishbowl with a cute goldfish swimming inside!")
+    data["items"]["small condo"] = make_item("small condo", 75, "s", "A small sized, partially carpeted kitty condo with room for up to 3 cats!")
+    data["items"]["medium condo"] = make_item("medium condo", 150, "s", "A medium sized kitty condo with full carpeting and room for up to 5 cats!")
+    data["items"]["large condo"] = make_item("large condo", 50, "g", "A large sized kitty condo with luxurious berber carpeting, hand stitching, and room for up to 7 cats!")
+    data["items"]["bowl of dry food"] = make_item("bowl of dry food", 10, "s", "Basic dry cat food, it is very crunchy and plain.")
+    data["items"]["can of wet food"] = make_item("can of wet food", 2, "g", "Basic wet cat food, it has a pungent smell!")
+    data["items"]["can of fancy food"] = make_item("can of fancy food", 5, "g", "Artisanally hand-crafted fair trade organic cat food, mmmm!")
+    data["items"]["bag of catnip"] = make_item("bag of catnip", 7, "g", "A small bag of catnip, the smell drives cats wild!")
+    data["items"]["plain pillow"] = make_item("plain pillow", 30, "s", "A small plain pillow, it's soft and blue!")
+    data["items"]["tie-dye pillow"] = make_item("tie-dye pillow", 15, "g", "A thick fluffy pillow made from very soft tie-dyed fleece!")
+    data["items"]["plastic bucket"] = make_item("plastic bucket", 20, "s", "A small green plastic bucket with white handle, I has a bucket!")
