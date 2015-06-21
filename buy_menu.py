@@ -9,7 +9,7 @@ def menu(data):
                "examine": ex_item,
                "check wallet": wallet,
                "list items": list_items,
-               "quit": exit_buy}
+               "leave shop": exit_buy}
     while data["want_to_buy"]:
         inp = raw_input("{0} What do you want to do? ".format(data["prefix"]))
         if inp in actions:
@@ -36,14 +36,14 @@ def ex_item(data):
     items = data["items"].keys()
     printer.p(data["prefix"],"Here are the items you can see: "+", ".join(items))
     inp = raw_input("{0} which would you like to examine? ".format(data["prefix"]))
-    if inp in items: 
+    if inp in items:
         print data["items"][inp]["description"]
     else:
         printer.p(data["prefix"],"uhhh sorry, I don't see that item")
 
 def buy_item(data):
     buyable_items = [item for item in data["items"].keys() if data["items"][item]["attributes"] == []]
-    print "Here are the items up for purchase: "+", ".join(buyable_items)
+    printer.p(data["prefix"], "Here are the items up for purchase: {0}".format(", ".join(buyable_items))
     inp = raw_input("{0} Which would you like to buy? ".format(data["prefix"]))
     if inp in buyable_items:
         try_to_buy(data, inp)

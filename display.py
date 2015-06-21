@@ -1,7 +1,7 @@
 import datetime
 import json
 import data_constructor
-import buy_menu
+import buy_menu, placement
 import printer
 
 def store_data(data):
@@ -21,6 +21,9 @@ def prep_data_on_close(data):
     data["start"] = cur_time.isoformat()
     store_data(data)
 
+# this should be remade but where we just take the time diff
+# and do itterative deletions to it until we get to some minimal
+# amt and store it, rather than this time left precomputation
 def compute_interactions(data):
     cur_time = datetime.datetime.now()
     time_since = (cur_time - data["start"]).total_seconds()
@@ -37,17 +40,19 @@ def compute_interactions(data):
 def desc_yard(data):
     toys = [item for item in data["items"].values() if "in_yard" in item["attributes"]]
     for toy in toys:
-        second = ""
-        second = toy["occupant"]
-        if second == "":
-            second = "no cat"
-        print "You have a {0} and it is being used by {1}".format(toy, second)
+        occupants = toy["occupant"]
+        if len(occupants) == 0:
+            print "You have a {0} and it isn't being used".format(toy)
+        else:
+            print "You have a {0} and it is being used by {1}".format(toy, ", ".format(occupants))
     print "You have {0} open spaces on your lawn".format(6-len(toys))
-    print "Your food is {0}".format(data["food_remaining"])
-    return
+
+def check_status(data):
+    desc_yard(data)
+    check_food(data)
 
 def check_food(data):
-    print "you have {0} food remaining".format(data["food_remaining"])
+    print "you have {0} minutes of food remaining".format(data["food_remaining"])
 
 def print_help(data):
     print "Welcome to Neko Atsume 3000!"
@@ -73,12 +78,15 @@ def main():
     #data["start"] = datetime.datetime.strptime(data["start"],).time()
     data["want_to_play"] = True
     actions = {"quit": quit,
-               "look": desc_yard,
+               "look": check_status,
                "shop" : buy_menu.menu,
+               "place items": placement.menu,
                "check food" : check_food,
                "help": print_help}
+    data["prefix"] = "[Main Menu]"
+    check_status(data)
     while data["want_to_play"] == True:
-        data["prefix"] = "[Main Menu] "
+        data["prefix"] = "[Main Menu]"
         inp = raw_input("{0} Choose an action! ".format(data["prefix"]))
         if inp in actions:
             actions[inp](data)
