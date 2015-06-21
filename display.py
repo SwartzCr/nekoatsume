@@ -42,9 +42,10 @@ def desc_yard(data):
     for toy in toys:
         occupants = toy["occupant"]
         if len(occupants) == 0:
-            print "You have a {0} and it isn't being used".format(toy)
+            print "You have a {0} and it isn't being used".format(toy["name"])
         else:
-            print "You have a {0} and it is being used by {1}".format(toy, ", ".format(occupants))
+            print "You have a {0} and it is being used by {1}".format(toy["name"], ", ".format(occupants))
+    #TODO have this reflect sie
     print "You have {0} open spaces on your lawn".format(6-len(toys))
 
 def check_status(data):
@@ -87,6 +88,7 @@ def main():
     check_status(data)
     while data["want_to_play"] == True:
         data["prefix"] = "[Main Menu]"
+        printer.prompt(data["prefix"], actions.keys())
         inp = raw_input("{0} Choose an action! ".format(data["prefix"]))
         if inp in actions:
             actions[inp](data)

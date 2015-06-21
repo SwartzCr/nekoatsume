@@ -11,6 +11,7 @@ def menu(data):
                "list items": list_items,
                "leave shop": exit_buy}
     while data["want_to_buy"]:
+        printer.prompt(data["prefix"], actions.keys())
         inp = raw_input("{0} What do you want to do? ".format(data["prefix"]))
         if inp in actions:
             actions[inp](data)
@@ -43,12 +44,12 @@ def ex_item(data):
 
 def buy_item(data):
     buyable_items = [item for item in data["items"].keys() if data["items"][item]["attributes"] == []]
-    printer.p(data["prefix"], "Here are the items up for purchase: {0}".format(", ".join(buyable_items))
+    printer.p(data["prefix"], "Here are the items up for purchase: {0}".format(", ".join(buyable_items)))
     inp = raw_input("{0} Which would you like to buy? ".format(data["prefix"]))
     if inp in buyable_items:
         try_to_buy(data, inp)
     else:
-        print "uhhh sorry, we don't carry that item"
+        printer.p(data["prefix"], "uhhh sorry, we don't carry that item")
 
 def try_to_buy(data, item_name):
     item = data["items"][item_name]
@@ -56,10 +57,10 @@ def try_to_buy(data, item_name):
     money = data[thing]
     cost = item["cost"]
     if money < cost:
-        print "I'm so sorry but you don't have enough money for that item!"
+        printer.p(data["prefix"], "I'm so sorry but you don't have enough money for that item!")
         return
     else:
         data[thing] = data[thing] - cost
         data["items"][item_name]["attributes"] = ["owned"]
-        print "Ah! A splendid choice!"
+        printer.p(data["prefix"], "Ah! A splendid choice!")
         return
