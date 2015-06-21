@@ -19,7 +19,9 @@ def build_data():
     data["s_fish"] = 300
     data["seen_cats"] = []
     data["start"] = cur_time
+    data["pending_$$$"] = []
     build_items(data)
+    build_cats(data)
     store_data(data)
 
 def make_item(name, cost, cur, size, desc):
@@ -51,3 +53,18 @@ def build_items(data):
     data["items"]["plain pillow"] = make_item("plain pillow", 30, "s", 1, "A small plain pillow, it's soft and blue!")
     data["items"]["tie-dye pillow"] = make_item("tie-dye pillow", 15, "g", 1, "A thick fluffy pillow made from very soft tie-dyed fleece!")
     data["items"]["plastic bucket"] = make_item("plastic bucket", 20, "s", 1, "A small green plastic bucket with white handle, I has a bucket!")
+
+
+def make_cat(name, desc, treasure, mod):
+    return {"name": name,
+            "desc": desc,
+            "time_in_yard": 0,
+            "on_toy": {},
+            "in_yard": False,
+            "treasure": treasure,
+            "given_treasure": False,
+            "mod": mod}
+
+# should this be birth cats?
+def build_cats(data):
+    data["cats"]["Gordo"] = make_cat("Gordo", "The most fucking annoying cat, he's always eating your food", "It's a useless piece of wood because Gordo sucks", 0.1)
