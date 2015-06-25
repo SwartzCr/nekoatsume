@@ -1,4 +1,5 @@
 import json
+import time
 import datetime
 
 def store_data(data):
@@ -6,11 +7,10 @@ def store_data(data):
         json.dump(data, f)
 
 def build_data():
-    #TODO fid a way to ge time
-    #cur_time = datetime.datetime.now().time().isoformat()
-    cur_time = 0
+    cur_time = time.time()
     data = {}
     data["items"] = {}
+    data["cats"] = {}
     data["yard"] = []
     data["space"] = 6
     data["food_remaining"] = 0
@@ -19,7 +19,7 @@ def build_data():
     data["s_fish"] = 300
     data["seen_cats"] = []
     data["start"] = cur_time
-    data["pending_$$$"] = []
+    data["pending_money"] = []
     build_items(data)
     build_cats(data)
     store_data(data)
@@ -30,6 +30,7 @@ def make_item(name, cost, cur, size, desc):
             "description": desc,
             "attributes": [],
             "occupant": [],
+            "occupied": False,
             "in_yard": False,
             "size": size,
             "name": name}

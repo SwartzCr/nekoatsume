@@ -1,8 +1,9 @@
-import datetime
+import time
 import json
 import data_constructor
-import buy_menu, placement
+import buy_menu, placement, update
 import printer
+import sys
 
 def store_data(data):
     with open("data.json", 'w') as f:
@@ -14,11 +15,6 @@ def load_data():
     return data
 
 def prep_data_on_close(data):
-    cur_time = datetime.datetime.now()
-    start = data["start"]
-    data["food_remaining"] -= (cur_time - start).total_seconds()
-    #TODO: datetimes aren't serializable
-    data["start"] = cur_time.isoformat()
     store_data(data)
 
 # this should be remade but where we just take the time diff
@@ -38,54 +34,53 @@ def compute_interactions(data):
     return compute
 
 def desc_yard(data):
-    toys = [item for item in data["items"].values() if "in_yard" in item["attributes"]]
+    toys = [item for item in data["yard"]]
+    printer.p(data["prefix"], "You have {0} total spaces on your lawn".format(6))
     for toy in toys:
         occupants = toy["occupant"]
         if len(occupants) == 0:
-            print "You have a {0} and it isn't being used".format(toy["name"])
+            printer.p(data["prefix"], "You have a {0} and it isn't being used".format(toy["name"]))
         else:
-            print "You have a {0} and it is being used by {1}".format(toy["name"], ", ".format(occupants))
+            printer.p(data["prefix"], "You have a {0} and it is being used by {1}".format(toy["name"], ", ".format(occupants)))
     #TODO have this reflect sie
-    print "You have {0} open spaces on your lawn".format(6-len(toys))
 
 def check_status(data):
     desc_yard(data)
     check_food(data)
 
 def check_food(data):
-    print "you have {0} minutes of food remaining".format(data["food_remaining"])
+    printer.p(data["prefix"], "you have {0} minutes of food remaining".format(data["food_remaining"]))
 
 def print_help(data):
-    print "Welcome to Neko Atsume 3000!"
-    print "In this game cats come to visit you and you feed them"
-    print "it's pretty cool, so you should play more"
+    temp = "[Help!]"
+    printer.p(temp, "Welcome to Neko Atsume 3000!")
+    printer.p(temp, "In this game cats come to visit you and you feed them")
+    printer.p(temp, "it's pretty cool, so you should play more")
 
 def quit(data):
     data["want_to_play"] = False
-    print "saving game!"
+    printer.p("[Goodbye!]", "Saving game! See you later!")
     prep_data_on_close(data)
 
 def main():
-    cur_time = datetime.datetime.now()
     try:
         data = load_data()
+        data = update.update(data)
     except:
+        print sys.exc_info()[0]
         data_constructor.build_data()
         data = load_data()
-    # some code for the first time this is run
-    #state = compute_interactions(data)
-    # update game state
-    # interaction loop
-    #data["start"] = datetime.datetime.strptime(data["start"],).time()
     data["want_to_play"] = True
+    data["start"] = time.time()
     actions = {"quit": quit,
                "look": check_status,
                "shop" : buy_menu.menu,
-               "place items": placement.menu,
+               "yard": placement.menu,
                "check food" : check_food,
                "help": print_help}
-    data["prefix"] = "[Main Menu]"
+    data["prefix"] = "[Welcome!]"
     check_status(data)
+    data["prefix"] = "[Main Menu]"
     while data["want_to_play"] == True:
         data["prefix"] = "[Main Menu]"
         printer.prompt(data["prefix"], actions.keys())

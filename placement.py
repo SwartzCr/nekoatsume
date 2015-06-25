@@ -7,7 +7,7 @@ def menu(data):
     actions = {"list owned items": list_owned_items,
                "list yard items": list_yard_items,
                "place item": place,
-               "main menu": exit}
+               "leave yard": exit}
     while data["placing"]:
         printer.prompt(data["prefix"], actions.keys())
         inp = raw_input("{0} What do you want to do? ".format(data["prefix"]))
