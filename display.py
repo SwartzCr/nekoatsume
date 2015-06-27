@@ -47,7 +47,10 @@ def check_status(data):
     check_food(data)
 
 def check_food(data):
-    printer.p(data["prefix"], "you have a {0} in your yard with {1} minutes of food remaining".format(data["food"], data["food_remaining"]))
+    if data["food"]:
+        printer.p(data["prefix"], "You have a {0} in your yard with {1} minutes of food remaining".format(data["food"], data["food_remaining"]))
+    else:
+        printer.p(data["prefix"], "Oh no! There's no food in your yard! No cats will show up if you don't have any food!")
 
 def collect_money(data):
     if len(data["pending_money"]) == 0:

@@ -1,7 +1,7 @@
 import printer
 
 def menu(data):
-    data["prefix"] = "[Placement]"
+    data["prefix"] = "[The Yard]"
     #printer.p(data["prefix"], "You have {0} spaces open in your yard".format(compute_space(data)))
     list_yard_items(data)
     data["placing"] = True
