@@ -12,8 +12,10 @@ def build_data():
     data["items"] = {}
     data["cats"] = {}
     data["yard"] = []
+    data["owned_food"] = []
     data["space"] = 6
     data["food_remaining"] = 0
+    data["food"] = ""
     data["prefix"] = ""
     data["g_fish"] = 10
     data["s_fish"] = 300
@@ -48,9 +50,6 @@ def build_items(data):
     data["items"]["small condo"] = make_item("small condo", 75, "s", 1, "A small sized, partially carpeted kitty condo with room for up to 3 cats!")
     data["items"]["medium condo"] = make_item("medium condo", 150, "s", 2, "A medium sized kitty condo with full carpeting and room for up to 5 cats!")
     data["items"]["large condo"] = make_item("large condo", 50, "g", 2, "A large sized kitty condo with luxurious berber carpeting, hand stitching, and room for up to 7 cats!")
-    data["items"]["bowl of dry food"] = make_item("bowl of dry food", 10, "s", 1, "Basic dry cat food, it is very crunchy and plain.")
-    data["items"]["can of wet food"] = make_item("can of wet food", 2, "g", 1, "Basic wet cat food, it has a pungent smell!")
-    data["items"]["can of fancy food"] = make_item("can of fancy food", 5, "g", 1, "Artisanally hand-crafted fair trade organic cat food, mmmm!")
     data["items"]["bag of catnip"] = make_item("bag of catnip", 7, "g", 1, "A small bag of catnip, the smell drives cats wild!")
     data["items"]["plain pillow"] = make_item("plain pillow", 30, "s", 1, "A small plain pillow, it's soft and blue!")
     data["items"]["tie-dye pillow"] = make_item("tie-dye pillow", 15, "g", 1, "A thick fluffy pillow made from very soft tie-dyed fleece!")
@@ -63,6 +62,9 @@ def build_items(data):
     data["items"]["rainbow umbrella"] = make_item("rainbow umbrella", 25, "g", 2, "A large rainbow patterned umbrella with room for up to 5 cats!")
     data["items"]["plain umbrella"] = make_item("plain umbrella", 250, "s", 2, "A large plain umbrella with room for up to 4 cats, it's bright yellow!")
     data["items"]["plush froggy"] = make_item("plush froggy", 75, "s", 1, "A cute green plush frog toy that squeaks when squeezed!")
+    data["items"]["bowl of dry food"] = make_item("bowl of dry food", 10, "s", 300, "Basic dry cat food, it is very crunchy and plain.")
+    data["items"]["can of wet food"] = make_item("can of wet food", 2, "g", 300, "Basic wet cat food, it has a pungent smell!")
+    data["items"]["can of fancy food"] = make_item("can of fancy food", 5, "g", 300, "Artisanally hand-crafted fair trade organic cat food, mmmm!")
 
 def make_cat(name, desc, treasure, mod):
     return {"name": name,

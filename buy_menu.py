@@ -44,8 +44,8 @@ def ex_item(data):
 
 def buy_item(data):
     buyable_items = [item for item in data["items"].keys() if data["items"][item]["attributes"] == []]
-    printer.p(data["prefix"], "Here are the items up for purchase: {0}".format(", ".join(buyable_items)))
-    inp = raw_input("{0} Which would you like to buy? ".format(data["prefix"]))
+    #printer.p(data["prefix"], "Here are the items up for purchase: {0}".format(", ".join(buyable_items)))
+    inp = raw_input("{0} What item would you like to buy? ".format(data["prefix"]))
     if inp in buyable_items:
         try_to_buy(data, inp)
     else:
@@ -53,14 +53,17 @@ def buy_item(data):
 
 def try_to_buy(data, item_name):
     item = data["items"][item_name]
-    thing = item["currency"]+"_fish"
-    money = data[thing]
+    currency = item["currency"]+"_fish"
+    money = data[currency]
     cost = item["cost"]
     if money < cost:
         printer.p(data["prefix"], "I'm so sorry but you don't have enough money for that item!")
         return
     else:
-        data[thing] = data[thing] - cost
-        data["items"][item_name]["attributes"] = ["owned"]
+        data[currency] = data[currency] - cost
+        if item["size"] < 6:
+            data["items"][item_name]["attributes"] = ["owned"]
+        else:
+            data["owned_food"].append(item.copy())
         printer.p(data["prefix"], "Ah! A splendid choice!")
         return

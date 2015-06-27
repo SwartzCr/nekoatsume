@@ -37,19 +37,26 @@ def desc_yard(data):
     toys = [item for item in data["yard"]]
     printer.p(data["prefix"], "You have {0} total spaces on your lawn".format(6))
     for toy in toys:
-        occupants = toy["occupant"]
-        if len(occupants) == 0:
-            printer.p(data["prefix"], "You have a {0} and it isn't being used".format(toy["name"]))
-        else:
-            printer.p(data["prefix"], "You have a {0} and it is being used by {1}".format(toy["name"], ", ".format(occupants)))
+        occupants = toy["occupant"] or ["no one"]
+        printer.p(data["prefix"], "You have a {0} and it is being used by {1}".format(toy["name"], ", and ".join(occupants)))
     #TODO have this reflect sie
 
 def check_status(data):
-    desc_yard(data)
+    #desc_yard(data)
+    placement.list_yard_items(data)
     check_food(data)
 
 def check_food(data):
-    printer.p(data["prefix"], "you have {0} minutes of food remaining".format(data["food_remaining"]))
+    printer.p(data["prefix"], "you have a {0} in your yard with {1} minutes of food remaining".format(data["food"], data["food_remaining"]))
+
+def collect_money(data):
+    if len(data["pending_money"]) == 0:
+        printer.p("[$$$$$$]", "Sorry, no cats have left you anything")
+        return
+    for i in range(len(data["pending_money"])):
+        money = data["pending_money"].pop()
+        printer.p("[$$$$$$]", "Yes! {0} left you {1} fish!".format(money[0],str(money[1])))
+        data["s_fish"] += money[1]
 
 def print_help(data):
     temp = "[Help!]"
@@ -76,6 +83,7 @@ def main():
                "look": check_status,
                "shop" : buy_menu.menu,
                "yard": placement.menu,
+               "collect money": collect_money,
                "check food" : check_food,
                "help": print_help}
     data["prefix"] = "[Welcome!]"
