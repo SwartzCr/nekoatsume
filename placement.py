@@ -36,11 +36,15 @@ def list_yard_items(data):
         for thing in things:
             cat = "no one"
             if thing[1]:
-                cat = thing[1][0]["name"]
+                try:
+                    cat = thing[1][0]["name"]
+                except:
+                    pass
             printer.p(data["prefix"], "Your yard currently has a {0} in it, occupied by {1}".format(thing[0], cat))
     #TODO add cat descriptions
     else:
         printer.p(data["prefix"], "You currently have nothing in your yard, how sad")
+    check_food(data)
 
 def cats(data):
     #cats = [(obj, obj["occupant"]) for obj in data["yard"] if obj["occupied"]]
@@ -89,12 +93,14 @@ def remove_from_yard(data, item_name):
        #TODO clear cats from this
        data["yard"].remove(item)
        item["in_yard"] = False
-
-def food(data):
+def check_food(data):
     if data["food_remaining"] == 0:
         printer.p(data["prefix"], "Your yard currently doesn't have any food in it! No cats will come if there's no food!")
     else:
         printer.p(data["prefix"], "Your yard currently has a {0} in it with {1} time remaining".format(data["food"], data["food_remaining"]))
+
+def food(data):
+    check_food(data)
     placable_items = {}
     for idx,item in enumerate(data["owned_food"]):
         if item["name"] not in placable_items.keys():

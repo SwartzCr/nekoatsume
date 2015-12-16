@@ -1,4 +1,5 @@
 import printer
+DEMARCATION = 6
 
 def menu(data):
     data["prefix"] = "[Item Shop]"
@@ -20,10 +21,13 @@ def menu(data):
             printer.invalid(data["prefix"], actions.keys())
 
 def list_items(data):
-    catalog = [item for item in data["items"].values() if item["attributes"] == []]
+    catalog = [item for item in data["items"].values() if item["attributes"] == [] and item["size"] < DEMARCATION]
+    food = [item for item in data["items"].values() if item["attributes"] == [] and item["size"] > DEMARCATION]
     owned = [item for item in data["items"].values() if "owned" in item["attributes"]]
     for item in catalog:
-        printer.p(data["prefix"], "You can buy a {0} for {1}{2}".format(item["name"], item["cost"], item["currency"]))
+        printer.p(data["prefix"], "{0} You can buy a {1} for {2}{3}".format("(toy)", item["name"], item["cost"], item["currency"]))
+    for item in food:
+        printer.p(data["prefix"], "{0} You can buy a {1} for {2}{3}".format("(food)",item["name"], item["cost"], item["currency"]))
     if len(owned) > 0:
         printer.p(data["prefix"],"you already own a {0}".format(", and a ".join([item["name"] for item in owned])))
 
