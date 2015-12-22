@@ -1,15 +1,28 @@
-# nekoatsume
-a commandline neko atsume game
+# 0( =^･_･^)=〇 Neko Atsume
 
-This is a text only port of the phone game neko atsume: https://play.google.com/store/apps/details?id=jp.co.hit_point.nekoatsume&hl=en  
+This is a text based command line port of the phone game [Neko Atsume](https://play.google.com/store/apps/details?id=jp.co.hit_point.nekoatsume&hl=en).
 
-This game runs in python, to start type 'python display.py' and the game will buld all required database objectsand begin your game.
+## Play
 
-Currently the game doesn't obfurscate it's data directory, which is stored as a large json file that is read between plays.
+This game runs in Python; to play the game do the following from a Terminal:
 
-This should work with standard python, but requires time, datetime, and json packages.
+```
+git clone https://github.com/SwartzCr/nekoatsume.git
+cd nekoatsume
+python display.py
+```
 
-Todos:
-* Balance income with cost of items and cat arrival frequency
-* Add more items
-* include fuzzy string matching for commands
+This builds all required database objects and begins your game.
+
+The game doesn't currently obfurscate its data directory, stored as a large 
+JSON file that gets read between plays.
+
+This should work with standard python, but requires the `time`,
+`datetime`, and `json` packages.
+
+TODOs:
+
+* [ ] Balance income with cost of items and cat arrival frequency
+* [ ] Add more items
+* [ ] Include fuzzy string matching for commands
+* [x] Fancy up the README
