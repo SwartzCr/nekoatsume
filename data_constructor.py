@@ -2,9 +2,11 @@ import json
 import time
 import datetime
 
+
 def store_data(data):
     with open("data.json", 'w') as f:
         json.dump(data, f)
+
 
 def build_data():
     cur_time = time.time()
@@ -26,6 +28,7 @@ def build_data():
     build_cats(data)
     store_data(data)
 
+
 def make_item(name, cost, cur, size, desc):
     return {"cost": cost,
             "currency": cur,
@@ -37,6 +40,10 @@ def make_item(name, cost, cur, size, desc):
             "size": size,
             "name": name}
 
+
+# TODO: Keep data in JSON file to simplify this function
+#       Consider something like Marshmallow for deserialization into app objs
+#       https://marshmallow.readthedocs.org/en/latest/
 def build_items(data):
     data["items"]["rubber ball"] = make_item("rubber ball", 5, "s", 1, "a small bright orange rubber ball, it's squishy and squeaky!")
     data["items"]["sparkle ball"] = make_item("sparkle ball", 5, "g", 1, "a small clear rubber ball filled with colorful sparkling glitter!")
@@ -66,6 +73,7 @@ def build_items(data):
     data["items"]["can of wet food"] = make_item("can of wet food", 2, "g", 300, "Basic wet cat food, it has a pungent smell!")
     data["items"]["can of fancy food"] = make_item("can of fancy food", 5, "g", 300, "Artisanally hand-crafted fair trade organic cat food, mmmm!")
 
+
 def make_cat(name, desc, treasure, mod):
     return {"name": name,
             "desc": desc,
@@ -76,11 +84,15 @@ def make_cat(name, desc, treasure, mod):
             "given_treasure": False,
             "mod": mod}
 
-# should this be birth cats?
+
+# TODO: Keep data in JSON file to simplify this function
+#       Consider something like Marshmallow for deserialization into app objs
+#       https://marshmallow.readthedocs.org/en/latest/
+#
+# TODO: should this be named birth_cats? ;)
 def build_cats(data):
     data["cats"]["Gordo"] = make_cat("Gordo", "The most fucking annoying cat, he's always eating your food", "It's a useless piece of wood because Gordo sucks", 0.1)
     data["cats"]["Pukka"] = make_cat("Pukka", "Pukka is a white shorthair with cream splotches and green eyes; she loves to chase lasers and surf", "It's a block of surf wax", 0.1)
     data["cats"]["Peebles"] = make_cat("Peebles", "Peebles is a black and white shorthair with blue eyes; he likes death metal music and piles of catnip", "It's a tortoise shell guitar pick", 0.1)
     data["cats"]["Tarawa"] = make_cat("Tarawa", "Tarawa is a gray longhair with white streaks and gray eyes; she likes relaxing and chasing birds", "It's a Blue Jay feather", 0.1)
     data["cats"]["Felix"] = make_cat("Felix", "Felix is an orange and white shorthair tabby with yellow eyes; he is very mellow and mostly meditates all day long", "It's a Buddha incense holder", 0.1)
-  
