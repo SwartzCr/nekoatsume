@@ -1,3 +1,4 @@
+from __future__ import print_function
 import buy_menu
 import data_constructor
 import datetime
@@ -7,6 +8,11 @@ import printer
 import sys
 import time
 import update
+
+try:
+    input = raw_input
+except NameError:
+    pass
 
 
 def store_data(data):
@@ -91,7 +97,7 @@ def main():
         data = load_data()
         data = update.update(data)
     except:
-        print sys.exc_info()[0]
+        print(sys.exc_info()[0])
         data_constructor.build_data()
         data = load_data()
     data["want_to_play"] = True
@@ -109,7 +115,7 @@ def main():
     while data["want_to_play"] is True:
         data["prefix"] = "[Main Menu]"
         printer.prompt(data["prefix"], actions.keys())
-        inp = raw_input("{0} Choose an action! ".format(data["prefix"]))
+        inp = input("{0} Choose an action! ".format(data["prefix"]))
         if inp in actions:
             actions[inp](data)
             continue
