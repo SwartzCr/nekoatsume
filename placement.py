@@ -1,5 +1,10 @@
 import printer
 
+try:
+    input = raw_input
+except NameError:
+    pass
+
 
 def menu(data):
     data["prefix"] = "[The Yard]"
@@ -14,7 +19,7 @@ def menu(data):
                "leave yard": exit}
     while data["placing"]:
         printer.prompt(data["prefix"], actions.keys())
-        inp = raw_input("{0} What do you want to do? ".format(data["prefix"]))
+        inp = input("{0} What do you want to do? ".format(data["prefix"]))
         if inp in actions:
             actions[inp](data)
             continue
@@ -66,7 +71,7 @@ def place(data):
         if item["size"] < 6:
             placable_items[item["name"]] = item
     printer.p(data["prefix"], "Here are the items that you can put in your yard: {0}".format(", ".join(placable_items.keys())))
-    inp = raw_input("{0} Which item would you like to place? ".format(data["prefix"]))
+    inp = input("{0} Which item would you like to place? ".format(data["prefix"]))
     if inp in placable_items.keys():
         try_to_place(data, placable_items[inp])
     else:
@@ -86,7 +91,7 @@ def try_to_place(data, item):
 def offer_replace(data, item):
     yard_items = [toy["name"] for toy in data["yard"]]
     printer.p(data["prefix"], "Currently in your yard you have: a {0}".format(", and a".join(yard_items)))
-    inp = raw_input("{0} Would you like to replace any of the items in your yard? Which one? ".format(data["prefix"]))
+    inp = input("{0} Would you like to replace any of the items in your yard? Which one? ".format(data["prefix"]))
     if inp in yard_items:
         remove_from_yard(data, inp)
         try_to_place(data, item)
@@ -121,7 +126,7 @@ def food(data):
     printer.p(data["prefix"], "Here's what you can place:")
     for key in placable_items.keys():
         printer.p(data["prefix"], "A {0} ({1})".format(key, placable_items[key][0]))
-    to_place = raw_input("{0} Which would you like to place? (hit ENTER if none) ".format(data["prefix"]))
+    to_place = input("{0} Which would you like to place? (hit ENTER if none) ".format(data["prefix"]))
     if to_place in placable_items.keys():
         put_food_in_yard(data, placable_items[to_place][1])
 
