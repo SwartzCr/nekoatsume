@@ -8,8 +8,9 @@ except NameError:
 
 
 def menu(data):
-    data["prefix"] = "[Item Shop]"
-    printer.ok(data["prefix"], "you have {0} silver fish and {1} gold fish to spend".format(data["s_fish"], data["g_fish"]))
+    data["prefix"] = "{.SHOP}[Item Shop]{.ENDC}".format(
+        printer.PColors, printer.PColors)
+    printer.p(data["prefix"], "you have {0} silver fish and {1} gold fish to spend".format(data["s_fish"], data["g_fish"]))
     list_items(data)
     data["want_to_buy"] = True
     actions = {"buy": buy_item,
@@ -19,8 +20,7 @@ def menu(data):
                "leave shop": exit_buy}
     while data["want_to_buy"]:
         printer.prompt(data["prefix"], actions.keys())
-        inp = input("{.STATUS}{} What do you want to do? {.ENDC}".format(
-            printer.PColors, data["prefix"], printer.PColors))
+        inp = input("{0} What do you want to do? ".format(data["prefix"]))
         if inp in actions:
             actions[inp](data)
             continue
@@ -33,11 +33,11 @@ def list_items(data):
     food = [item for item in data["items"].values() if item["attributes"] == [] and item["size"] > DEMARCATION]
     owned = [item for item in data["items"].values() if "owned" in item["attributes"]]
     for item in catalog:
-        printer.info(data["prefix"], "{0} You can buy a {1} for {2}{3}".format("(toy)", item["name"], item["cost"], item["currency"]))
+        printer.p(data["prefix"], "{0} You can buy a {1} for {2}{3}".format("(toy)", item["name"], item["cost"], item["currency"]))
     for item in food:
-        printer.info(data["prefix"], "{0} You can buy a {1} for {2}{3}".format("(food)", item["name"], item["cost"], item["currency"]))
+        printer.p(data["prefix"], "{0} You can buy a {1} for {2}{3}".format("(food)", item["name"], item["cost"], item["currency"]))
     if len(owned) > 0:
-        printer.warn(data["prefix"], "you already own a {0}".format(", and a ".join([item["name"] for item in owned])))
+        printer.p(data["prefix"], "you already own a {0}".format(", and a ".join([item["name"] for item in owned])))
 
 
 def exit_buy(data):
@@ -45,28 +45,27 @@ def exit_buy(data):
 
 
 def wallet(data):
-    printer.ok(data["prefix"], "you have {0} silver fish and {1} gold fish to spend".format(data["s_fish"], data["g_fish"]))
+    printer.p(data["prefix"], "you have {0} silver fish and {1} gold fish to spend".format(data["s_fish"], data["g_fish"]))
 
 
 def ex_item(data):
     items = data["items"].keys()
-    printer.info(data["prefix"], "Here are the items you can see: " + ", ".join(items))
-    inp = input("{.STATUS}{} which would you like to examine? {.ENDC}".format(printer.Pcolors, data["prefix"], printer.PColors))
+    printer.p(data["prefix"], "Here are the items you can see: " + ", ".join(items))
+    inp = input("{0} which would you like to examine? ".format(data["prefix"]))
     if inp in items:
         print(data["items"][inp]["description"])
     else:
-        printer.warn(data["prefix"], "uhhh sorry, I don't see that item")
+        printer.p(data["prefix"], "uhhh sorry, I don't see that item")
 
 
 def buy_item(data):
     buyable_items = [item for item in data["items"].keys() if data["items"][item]["attributes"] == []]
-    # printer.info(data["prefix"], "Here are the items up for purchase: {0}".format(", ".join(buyable_items)))
-    inp = input("{.STATUS}{} What item would you like to buy? {.ENDC}".format(
-        printer.PColors, data["prefix"], printer.PColors))
+    # printer.p(data["prefix"], "Here are the items up for purchase: {0}".format(", ".join(buyable_items)))
+    inp = input("{0} What item would you like to buy? ".format(data["prefix"]))
     if inp in buyable_items:
         try_to_buy(data, inp)
     else:
-        printer.warn(data["prefix"], "uhhh sorry, we don't carry that item")
+        printer.p(data["prefix"], "uhhh sorry, we don't carry that item")
 
 
 def try_to_buy(data, item_name):
@@ -75,7 +74,7 @@ def try_to_buy(data, item_name):
     money = data[currency]
     cost = item["cost"]
     if money < cost:
-        printer.fail(data["prefix"], "I'm so sorry but you don't have enough money for that item!")
+        printer.p(data["prefix"], "I'm so sorry but you don't have enough money for that item!")
         return
     else:
         data[currency] = data[currency] - cost
@@ -83,5 +82,5 @@ def try_to_buy(data, item_name):
             data["items"][item_name]["attributes"] = ["owned"]
         else:
             data["owned_food"].append(item.copy())
-        printer.ok(data["prefix"], "Ah! A splendid choice!")
+        printer.p(data["prefix"], "Ah! A splendid choice!")
         return
