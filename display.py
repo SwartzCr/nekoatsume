@@ -109,11 +109,13 @@ def main():
                "collect money": collect_money,
                "check food": check_food,
                "help": print_help}
-    data["prefix"] = "[Welcome!]"
+    data["prefix"] = "{.WELCOME}[Welcome!]{.ENDC}".format(
+        printer.PColors, printer.PColors)
     check_status(data)
     data["prefix"] = "[Main Menu]"
     while data["want_to_play"] is True:
-        data["prefix"] = "[Main Menu]"
+        data["prefix"] = "{.MAIN}[Main Menu]{.ENDC}".format(
+            printer.PColors, printer.PColors)
         printer.prompt(data["prefix"], actions.keys())
         inp = input("{0} Choose an action! ".format(data["prefix"]))
         if inp in actions:
