@@ -49,10 +49,10 @@ def compute_interactions(data):
 
 def desc_yard(data):
     toys = [item for item in data["yard"]]
-    printer.p(data["prefix"], "You have {0} total spaces on your lawn".format(6))
+    printer.info(data["prefix"], "You have {0} total spaces on your lawn".format(6))
     for toy in toys:
         occupants = toy["occupant"] or ["no one"]
-        printer.p(data["prefix"], "You have a {0} and it is being used by {1}".format(toy["name"], ", and ".join(occupants)))
+        printer.info(data["prefix"], "You have a {0} and it is being used by {1}".format(toy["name"], ", and ".join(occupants)))
     # TODO: have this reflect size
 
 
@@ -64,31 +64,31 @@ def check_status(data):
 
 def check_food(data):
     if data["food"]:
-        printer.p(data["prefix"], "You have a {0} in your yard with {1} minutes of food remaining".format(data["food"], data["food_remaining"]))
+        printer.info(data["prefix"], "You have a {0} in your yard with {1} minutes of food remaining".format(data["food"], data["food_remaining"]))
     else:
-        printer.p(data["prefix"], "Oh no! There's no food in your yard! No cats will show up if you don't have any food!")
+        printer.warn(data["prefix"], "Oh no! There's no food in your yard! No cats will show up if you don't have any food!")
 
 
 def collect_money(data):
     if len(data["pending_money"]) == 0:
-        printer.p("[$$$$$$]", "Sorry, no cats have left you anything")
+        printer.fail("[$$$$$$]", "Sorry, no cats have left you anything")
         return
     for i in range(len(data["pending_money"])):
         money = data["pending_money"].pop()
-        printer.p("[$$$$$$]", "Yes! {0} left you {1} fish!".format(money[0], str(money[1])))
+        printer.ok("[$$$$$$]", "Yes! {0} left you {1} fish!".format(money[0], str(money[1])))
         data["s_fish"] += money[1]
 
 
 def print_help(data):
     temp = "[Help!]"
-    printer.p(temp, "Welcome to Neko Atsume!")
-    printer.p(temp, "In this game cats come to visit you and you feed them")
-    printer.p(temp, "it's pretty cool, so you should play more")
+    printer.yay(temp, "Welcome to Neko Atsume!")
+    printer.yay(temp, "In this game cats come to visit you and you feed them")
+    printer.yay(temp, "it's pretty cool, so you should play more")
 
 
 def quit(data):
     data["want_to_play"] = False
-    printer.p("[Goodbye!]", "Saving game! See you later!")
+    printer.ok("[Goodbye!]", "Saving game! See you later!")
     prep_data_on_close(data)
 
 
@@ -115,7 +115,8 @@ def main():
     while data["want_to_play"] is True:
         data["prefix"] = "[Main Menu]"
         printer.prompt(data["prefix"], actions.keys())
-        inp = input("{0} Choose an action! ".format(data["prefix"]))
+        inp = input("{.STATUS}{} Choose an action! {.ENDC}".format(
+            printer.PColors, data["prefix"], printer.PColors))
         if inp in actions:
             actions[inp](data)
             continue
