@@ -70,14 +70,6 @@ def desc_yard(data):
 def check_status(data):
     # desc_yard(data)
     placement.list_yard_items(data)
-    check_food(data)
-
-
-def check_food(data):
-    if data["food"]:
-        printer.p(data["prefix"], "You have a {0} in your yard with {1} minutes of food remaining".format(data["food"], data["food_remaining"]))
-    else:
-        printer.p(data["prefix"], "Oh no! There's no food in your yard! No cats will show up if you don't have any food!")
 
 
 def collect_money(data):
@@ -120,7 +112,7 @@ def main():
                "shop": buy_menu.menu,
                "yard": placement.menu,
                "collect money": collect_money,
-               "check food": check_food,
+               "check food": placement.check_food,
                "help": print_help}
     banner()
     data["prefix"] = "{.WELCOME}[Welcome!]{.ENDC}".format(
