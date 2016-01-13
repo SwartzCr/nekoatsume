@@ -3,6 +3,7 @@ import buy_menu
 import data_constructor
 import datetime
 import json
+import os
 import placement
 import printer
 import sys
@@ -16,12 +17,14 @@ except NameError:
 
 
 def store_data(data):
-    with open("data.json", 'w') as f:
+    data_file = os.getcwd() + '/var/data.json'
+    with open(data_file, 'w') as f:
         json.dump(data, f)
 
 
 def load_data():
-    with open("data.json", 'r') as f:
+    data_file = os.getcwd() + '/var/data.json'
+    with open(data_file, 'r') as f:
         data = json.load(f)
     return data
 
@@ -125,5 +128,3 @@ def main():
             continue
         else:
             printer.invalid(data["prefix"], actions.keys())
-
-main()
