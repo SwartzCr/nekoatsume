@@ -1,10 +1,12 @@
 import json
+import os
 import time
 import datetime
 
 
 def store_data(data):
-    with open("data.json", 'w') as f:
+    data_file = os.getcwd() + '/var/data.json'
+    with open(data_file, 'w') as f:
         json.dump(data, f)
 
 
