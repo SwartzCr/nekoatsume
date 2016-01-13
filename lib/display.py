@@ -32,6 +32,14 @@ def load_data():
 def prep_data_on_close(data):
     store_data(data)
 
+def banner():
+    print("             {.BANNERR}_{.ENDC}".format(printer.PColors, printer.PColors))
+    print("            {.BANNERR}| |                    _{.ENDC}".format(printer.PColors, printer.PColors))
+    print(" {.BANNERY}____  _____| |  _ ___     _____ _| |_  ___ _   _ ____  _____{.ENDC}".format(printer.PColors, printer.PColors))
+    print("{.BANNERG}|  _ \| ___ | |_/ ) _ \   (____ (_   _)/___) | | |    \| ___ |{.ENDC}".format(printer.PColors, printer.PColors))
+    print("{.BANNERB}| | | | ____|  _ ( |_| |  / ___ | | |_|___ | |_| | | | | ____|{.ENDC}".format(printer.PColors, printer.PColors))
+    print("{.BANNERP}|_| |_|_____)_| \_)___/   \_____|  \__|___/|____/|_|_|_|_____){.ENDC}\n".format(printer.PColors, printer.PColors))
+
 
 # TODO: this should be remade but where we just take the time diff
 # and do itterative deletions to it until we get to some minimal
@@ -114,6 +122,7 @@ def main():
                "collect money": collect_money,
                "check food": check_food,
                "help": print_help}
+    banner()
     data["prefix"] = "{.WELCOME}[Welcome!]{.ENDC}".format(
         printer.PColors, printer.PColors)
     check_status(data)
