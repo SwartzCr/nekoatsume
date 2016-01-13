@@ -1,4 +1,9 @@
 class PColors:
+    BANNERR = '\033[31m'
+    BANNERY = '\033[33m'
+    BANNERG = '\033[32m'
+    BANNERB = '\033[34m'
+    BANNERP = '\033[35m'
     GOODBYE = '\033[93m'
     HELP = '\033[36m'
     INFO = '\033[37m'
@@ -9,7 +14,11 @@ class PColors:
     ENDC = '\033[0m'
 
     def disable(self):
-        self.GOODBYE = ''
+        self.BANNERR = ''
+        self.BANNERY = ''
+        self.BANNERG = ''
+        self.BANNERB = ''
+        self.GOODBYP = ''
         self.HELP = ''
         self.INFO = ''
         self.MAIN = ''
