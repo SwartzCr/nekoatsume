@@ -9,7 +9,7 @@ This game runs in Python; to play the game do the following from a Terminal:
 ```
 git clone https://github.com/SwartzCr/nekoatsume.git
 cd nekoatsume
-python display.py
+./nekoatsume.py
 ```
 
 This builds all required database objects and begins your game.

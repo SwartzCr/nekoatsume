@@ -125,5 +125,3 @@ def main():
             continue
         else:
             printer.invalid(data["prefix"], actions.keys())
-
-main()
