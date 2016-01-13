@@ -80,7 +80,8 @@ def collect_money(data):
 
 
 def print_help(data):
-    temp = "[Help!]"
+    temp = "{.HELP}[Help!]{.ENDC}".format(
+        printer.PColors, printer.PColors)
     printer.p(temp, "Welcome to Neko Atsume!")
     printer.p(temp, "In this game cats come to visit you and you feed them")
     printer.p(temp, "it's pretty cool, so you should play more")
@@ -88,7 +89,8 @@ def print_help(data):
 
 def quit(data):
     data["want_to_play"] = False
-    printer.p("[Goodbye!]", "Saving game! See you later!")
+    printer.p("{.GOODBYE}[Goodbye!]{.ENDC}".format(
+        printer.PColors, printer.PColors), "Saving game! See you later!")
     prep_data_on_close(data)
 
 
@@ -97,7 +99,7 @@ def main():
         data = load_data()
         data = update.update(data)
     except:
-        print(sys.exc_info()[0])
+        # print(sys.exc_info())
         data_constructor.build_data()
         data = load_data()
     data["want_to_play"] = True
@@ -109,11 +111,13 @@ def main():
                "collect money": collect_money,
                "check food": check_food,
                "help": print_help}
-    data["prefix"] = "[Welcome!]"
+    data["prefix"] = "{.WELCOME}[Welcome!]{.ENDC}".format(
+        printer.PColors, printer.PColors)
     check_status(data)
     data["prefix"] = "[Main Menu]"
     while data["want_to_play"] is True:
-        data["prefix"] = "[Main Menu]"
+        data["prefix"] = "{.MAIN}[Main Menu]{.ENDC}".format(
+            printer.PColors, printer.PColors)
         printer.prompt(data["prefix"], actions.keys())
         inp = input("{0} Choose an action! ".format(data["prefix"]))
         if inp in actions:

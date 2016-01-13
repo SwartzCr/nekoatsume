@@ -7,7 +7,8 @@ except NameError:
 
 
 def menu(data):
-    data["prefix"] = "[The Yard]"
+    data["prefix"] = "{.YARD}[The Yard]{.ENDC}".format(
+        printer.PColors, printer.PColors)
     # printer.p(data["prefix"], "You have {0} spaces open in your yard".format(compute_space(data)))
     list_yard_items(data)
     data["placing"] = True

@@ -8,7 +8,8 @@ except NameError:
 
 
 def menu(data):
-    data["prefix"] = "[Item Shop]"
+    data["prefix"] = "{.SHOP}[Item Shop]{.ENDC}".format(
+        printer.PColors, printer.PColors)
     printer.p(data["prefix"], "you have {0} silver fish and {1} gold fish to spend".format(data["s_fish"], data["g_fish"]))
     list_items(data)
     data["want_to_buy"] = True
