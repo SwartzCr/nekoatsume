@@ -80,7 +80,8 @@ def collect_money(data):
 
 
 def print_help(data):
-    temp = "[Help!]"
+    temp = "{.HELP}[Help!]{.ENDC}".format(
+        printer.PColors, printer.PColors)
     printer.p(temp, "Welcome to Neko Atsume!")
     printer.p(temp, "In this game cats come to visit you and you feed them")
     printer.p(temp, "it's pretty cool, so you should play more")
@@ -98,7 +99,7 @@ def main():
         data = load_data()
         data = update.update(data)
     except:
-        print(sys.exc_info()[0])
+        # print(sys.exc_info())
         data_constructor.build_data()
         data = load_data()
     data["want_to_play"] = True

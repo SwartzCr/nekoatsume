@@ -1,5 +1,6 @@
 class PColors:
     GOODBYE = '\033[93m'
+    HELP = '\033[36m'
     INFO = '\033[37m'
     MAIN = '\033[37m'
     SHOP = '\033[95m'
@@ -9,6 +10,7 @@ class PColors:
 
     def disable(self):
         self.GOODBYE = ''
+        self.HELP = ''
         self.INFO = ''
         self.MAIN = ''
         self.SHOP = ''
