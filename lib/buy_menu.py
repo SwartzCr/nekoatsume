@@ -55,7 +55,7 @@ def ex_item(data):
     if inp in items:
         print(data["items"][inp]["description"])
     else:
-        printer.p(data["prefix"], "uhhh sorry, I don't see that item")
+        printer.warn(data["prefix"], "Uhhh sorry, I don't see that item")
 
 
 def buy_item(data):
@@ -65,7 +65,7 @@ def buy_item(data):
     if inp in buyable_items:
         try_to_buy(data, inp)
     else:
-        printer.p(data["prefix"], "uhhh sorry, we don't carry that item")
+        printer.warn(data["prefix"], "Uhhh sorry, we don't carry that item")
 
 
 def try_to_buy(data, item_name):

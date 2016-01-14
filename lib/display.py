@@ -33,12 +33,12 @@ def prep_data_on_close(data):
     store_data(data)
 
 def banner():
-    print("             {.BANNERR}_{.ENDC}".format(printer.PColors, printer.PColors))
-    print("            {.BANNERR}| |                    _{.ENDC}".format(printer.PColors, printer.PColors))
-    print(" {.BANNERY}____  _____| |  _ ___     _____ _| |_  ___ _   _ ____  _____{.ENDC}".format(printer.PColors, printer.PColors))
-    print("{.BANNERG}|  _ \| ___ | |_/ ) _ \   (____ (_   _)/___) | | |    \| ___ |{.ENDC}".format(printer.PColors, printer.PColors))
-    print("{.BANNERB}| | | | ____|  _ ( |_| |  / ___ | | |_|___ | |_| | | | | ____|{.ENDC}".format(printer.PColors, printer.PColors))
-    print("{.BANNERP}|_| |_|_____)_| \_)___/   \_____|  \__|___/|____/|_|_|_|_____){.ENDC}\n".format(printer.PColors, printer.PColors))
+    print("             {.RED}_{.ENDC}".format(printer.PColors, printer.PColors))
+    print("            {.RED}| |                    _{.ENDC}".format(printer.PColors, printer.PColors))
+    print(" {.YELLOW}____  _____| |  _ ___     _____ _| |_  ___ _   _ ____  _____{.ENDC}".format(printer.PColors, printer.PColors))
+    print("{.GREEN}|  _ \| ___ | |_/ ) _ \   (____ (_   _)/___) | | |    \| ___ |{.ENDC}".format(printer.PColors, printer.PColors))
+    print("{.BLUE}| | | | ____|  _ ( |_| |  / ___ | | |_|___ | |_| | | | | ____|{.ENDC}".format(printer.PColors, printer.PColors))
+    print("{.PURPLE}|_| |_|_____)_| \_)___/   \_____|  \__|___/|____/|_|_|_|_____){.ENDC}\n".format(printer.PColors, printer.PColors))
 
 
 # TODO: this should be remade but where we just take the time diff
@@ -74,11 +74,16 @@ def check_status(data):
 
 def collect_money(data):
     if len(data["pending_money"]) == 0:
-        printer.p("[$$$$$$]", "Sorry, no cats have left you anything")
+        printer.p("{.YELLOW}[$$$$$$]{.ENDC}".format(
+            printer.PColors,
+            printer.PColors), "Sorry, no cats have left you anything")
         return
     for i in range(len(data["pending_money"])):
         money = data["pending_money"].pop()
-        printer.p("[$$$$$$]", "Yes! {0} left you {1} fish!".format(money[0], str(money[1])))
+        printer.p("{.GREEN}[$$$$$$]{.ENDC}".format(
+            printer.PColors,
+            printer.PColors), "Yes! {0} left you {1} fish!".format(
+            money[0], str(money[1])))
         data["s_fish"] += money[1]
 
 
@@ -92,7 +97,7 @@ def print_help(data):
 
 def quit(data):
     data["want_to_play"] = False
-    printer.p("{.GOODBYE}[Goodbye!]{.ENDC}".format(
+    printer.p("{.BLUE}[Goodbye!]{.ENDC}".format(
         printer.PColors, printer.PColors), "Saving game! See you later!")
     prep_data_on_close(data)
 
@@ -115,7 +120,7 @@ def main():
                "check food": placement.check_food,
                "help": print_help}
     banner()
-    data["prefix"] = "{.WELCOME}[Welcome!]{.ENDC}".format(
+    data["prefix"] = "{.BLUE}[Welcome!]{.ENDC}".format(
         printer.PColors, printer.PColors)
     check_status(data)
     data["prefix"] = "[Main Menu]"
