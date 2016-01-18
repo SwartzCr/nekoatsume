@@ -25,8 +25,13 @@ class PColors:
         self.ENDC = ''
 
 
+def fail(prefix, words):
+    print("{.RED}{}{.ENDC} {}".format(PColors, prefix, PColors, words))
+
+
 def invalid(prefix, actions):
-    print("{.YELLOW}{}{.ENDC} Sorry, I didn't understand that. Valid options are: {}".format(PColors, prefix, PColors, ", ".join(actions)))
+    sorry_msg = "{.YELLOW}{}{.ENDC} Sorry, I don't understand. Options are: {}"
+    print(sorry_msg.format(PColors, prefix, PColors, ", ".join(actions)))
 
 
 def prompt(prefix, actions):
@@ -37,9 +42,16 @@ def p(prefix, words):
     print("{} {}".format(prefix, words))
 
 
+def shop(prefix, words):
+    print("{.SHOP}{}{.ENDC} {}".format(PColors, prefix, PColors, words))
+
+
+def success(prefix, words):
+    print("{.GREEN}{}{.ENDC} {}".format(PColors, prefix, PColors, words))
+
+
 def warn(prefix, words):
-    msg = "\033[0m" + prefix
-    msg = "{.RED}{}{.ENDC} {}".format(PColors, msg, PColors, words)
-    print(msg)
-    # print()
-    # print("{.YELLOW}[DEBUG]{.ENDC} Testing...".format(PColors, PColors))
+    print("{.YELLOW}{}{.ENDC} {}".format(PColors, prefix, PColors, words))
+
+def yard(prefix, words):
+    print("{.GREEN}{}{.ENDC} {}".format(PColors, prefix, PColors, words))

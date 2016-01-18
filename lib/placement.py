@@ -7,7 +7,7 @@ except NameError:
 
 
 def menu(data):
-    data["prefix"] = "{.YARD}[The Yard]{.ENDC}".format(
+    data["prefix"] = "[The Yard]{.ENDC}".format(
         printer.PColors, printer.PColors)
     # printer.p(data["prefix"], "You have {0} spaces open in your yard".format(compute_space(data)))
     list_yard_items(data)
@@ -19,8 +19,8 @@ def menu(data):
                "place food": food,
                "leave yard": exit}
     while data["placing"]:
-        printer.prompt(data["prefix"], actions.keys())
-        inp = input("{0} What do you want to do? ".format(data["prefix"]))
+        printer.yard(data["prefix"], actions.keys())
+        inp = input("{.YARD}{}{.ENDC} What do you want to do? ".format(printer.PColors, data["prefix"], printer.PColors))
         if inp in actions:
             actions[inp](data)
             continue
@@ -37,7 +37,7 @@ def exit(data):
 
 
 def list_owned_items(data):
-    printer.p(data["prefix"], "You currently own a {0}".format(", and a ".join([item["name"] for item in data["items"].values() if "owned" in item["attributes"]])))
+    printer.yard(data["prefix"], "You currently own a {0}".format(", and a ".join([item["name"] for item in data["items"].values() if "owned" in item["attributes"]])))
 
 
 def list_yard_items(data):
@@ -50,10 +50,10 @@ def list_yard_items(data):
                     cat = thing[1][0]["name"]
                 except:
                     pass
-            printer.p(data["prefix"], "Your yard currently has a {0} in it, occupied by {1}".format(thing[0], cat))
+            printer.yard(data["prefix"], "Your yard currently has a {0} in it, occupied by {1}".format(thing[0], cat))
     # TODO: add cat descriptions
     else:
-        printer.p(data["prefix"], "You currently have nothing in your yard, how sad")
+        printer.warn(data["prefix"], "You currently have nothing in your yard, how sad")
     check_food(data)
 
 
@@ -71,33 +71,33 @@ def place(data):
     for item in items_list:
         if item["size"] < 6:
             placable_items[item["name"]] = item
-    printer.p(data["prefix"], "Here are the items that you can put in your yard: {0}".format(", ".join(placable_items.keys())))
-    inp = input("{0} Which item would you like to place? ".format(data["prefix"]))
+    printer.yard(data["prefix"], "Here are the items that you can put in your yard: {0}".format(", ".join(placable_items.keys())))
+    inp = input("{.YARD}{}{.ENDC} Which item would you like to place? ".format(printer.PColors, data["prefix"], printer.PColors))
     if inp in placable_items.keys():
         try_to_place(data, placable_items[inp])
     else:
-        printer.p(data["prefix"], "I'm sorry I didn't recognize that item")
+        printer.warn(data["prefix"], "I'm sorry I didn't recognize that item")
 
 
 def try_to_place(data, item):
     if sum([toy["size"] for toy in data["yard"]]) + item["size"] < data["space"]:
         data["yard"].append(item)
         item["in_yard"] = True
-        printer.p(data["prefix"], "Nice! Your yard now consists of a {0}".format(", and a ".join([toy["name"] for toy in data["yard"]])))
+        printer.success(data["prefix"], "Nice! Your yard now consists of a {0}".format(", and a ".join([toy["name"] for toy in data["yard"]])))
     else:
-        printer.p(data["prefix"], "Oops that won't fit in your yard! Would you like to remove an item?")
+        printer.warn(data["prefix"], "Oops that won't fit in your yard! Would you like to remove an item?")
         offer_replace(data, item)
 
 
 def offer_replace(data, item):
     yard_items = [toy["name"] for toy in data["yard"]]
-    printer.p(data["prefix"], "Currently in your yard you have: a {0}".format(", and a".join(yard_items)))
-    inp = input("{0} Would you like to replace any of the items in your yard? Which one? ".format(data["prefix"]))
+    printer.yard(data["prefix"], "Currently in your yard you have: a {0}".format(", and a".join(yard_items)))
+    inp = input("{.YARD}{}{.ENDC} Would you like to replace any of the items in your yard? Which one? ".format(printer.PColors, data["prefix"], printer.PColors))
     if inp in yard_items:
         remove_from_yard(data, inp)
         try_to_place(data, item)
     else:
-        printer.p(data["prefix"], "Sorry I don't see that item in your yard")
+        printer.warn(data["prefix"], "Sorry I don't see that item in your yard")
 
 
 def remove_from_yard(data, item_name):
@@ -111,9 +111,9 @@ def remove_from_yard(data, item_name):
 
 def check_food(data):
     if data["food_remaining"] == 0:
-        printer.p(data["prefix"], "Your yard currently doesn't have any food in it! No cats will come if there's no food!")
+        printer.warn(data["prefix"], "Your yard currently doesn't have any food in it! No cats will come if there's no food!")
     else:
-        printer.p(data["prefix"], "Your yard currently has a {0} in it with {1} time remaining".format(data["food"], data["food_remaining"]))
+        printer.success(data["prefix"], "Your yard currently has a {0} in it with {1} time remaining".format(data["food"], data["food_remaining"]))
 
 
 def food(data):
@@ -124,10 +124,10 @@ def food(data):
             placable_items[item["name"]] = [1, idx]
         else:
             placable_items[item["name"]][0] += 1
-    printer.p(data["prefix"], "Here's what you can place:")
+    printer.yard(data["prefix"], "Here's what you can place:")
     for key in placable_items.keys():
-        printer.p(data["prefix"], "A {0} ({1})".format(key, placable_items[key][0]))
-    to_place = input("{0} Which would you like to place? (hit ENTER if none) ".format(data["prefix"]))
+        printer.yard(data["prefix"], "A {0} ({1})".format(key, placable_items[key][0]))
+    to_place = input("{.YARD}{}{.ENDC} Which would you like to place? (hit ENTER if none) ".format(printer.PColors, data["prefix"], printer.PColors))
     if to_place in placable_items.keys():
         put_food_in_yard(data, placable_items[to_place][1])
 
@@ -136,4 +136,4 @@ def put_food_in_yard(data, arr_idx):
     food = data["owned_food"].pop(arr_idx)
     data["food"] = food["name"]
     data["food_remaining"] = food["size"]
-    printer.p(data["prefix"], "Sweet! Your yard now has a {0} set out, and {1} of food remaining".format(data["food"], data["food_remaining"]))
+    printer.success(data["prefix"], "Sweet! Your yard now has a {0} set out, and {1} of food remaining".format(data["food"], data["food_remaining"]))
