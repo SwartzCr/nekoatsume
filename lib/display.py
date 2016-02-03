@@ -156,6 +156,7 @@ def main():
             printer.PColors, printer.PColors)
         printer.prompt(data["prefix"], actions.keys())
         inp = input("{0} Choose an action! ".format(data["prefix"]))
+        # pdb.set_trace()
         if inp in actions:
             actions[inp](data)
             continue
