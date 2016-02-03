@@ -26,7 +26,9 @@ def menu(data):
                "place food": food,
                "leave yard": exit}
     while data["placing"]:
-        printer.yard(data["prefix"], actions.keys())
+        # FIXME: with printer.prompt here and printer.invalid on unknown
+        #        input, the options are doubled up after an unknown input
+        printer.prompt(data["prefix"], actions.keys())
         inp = input("{.YARD}{}{.ENDC} What do you want to do? ".format(
             printer.PColors, data["prefix"], printer.PColors))
         if inp in actions:
