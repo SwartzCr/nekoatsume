@@ -1,3 +1,9 @@
+"""
+Place items.
+
+This module handles the placement of food and toys in the yard.
+"""
+
 import printer
 
 try:
@@ -7,9 +13,10 @@ except NameError:
 
 
 def menu(data):
-    data["prefix"] = "[The Yard]{.ENDC}".format(
-        printer.PColors, printer.PColors)
-    # printer.p(data["prefix"], "You have {0} spaces open in your yard".format(compute_space(data)))
+    """Display yard menu."""
+    data["prefix"] = "[The Yard]".format(printer.PColors, printer.PColors)
+    # printer.p(data["prefix"], "You have {0} spaces open in your yard"
+    # .format(compute_space(data)))
     list_yard_items(data)
     data["placing"] = True
     actions = {"list owned items": list_owned_items,
@@ -20,7 +27,8 @@ def menu(data):
                "leave yard": exit}
     while data["placing"]:
         printer.yard(data["prefix"], actions.keys())
-        inp = input("{.YARD}{}{.ENDC} What do you want to do? ".format(printer.PColors, data["prefix"], printer.PColors))
+        inp = input("{.YARD}{}{.ENDC} What do you want to do? ".format(
+            printer.PColors, data["prefix"], printer.PColors))
         if inp in actions:
             actions[inp](data)
             continue
@@ -29,18 +37,24 @@ def menu(data):
 
 
 def compute_space(data):
+    """Compute available yard space."""
     return data["space"] - sum([item["size"] for item in data["yard"]])
 
 
 def exit(data):
+    """Cancel item placement."""
     data["placing"] = False
 
 
 def list_owned_items(data):
-    printer.yard(data["prefix"], "You currently own a {0}".format(", and a ".join([item["name"] for item in data["items"].values() if "owned" in item["attributes"]])))
+    """Display a list of owned items."""
+    printer.yard(data["prefix"], "You currently own a {0}".format(
+        ", and a ".join([item["name"] for item in data["items"].values()
+                         if "owned" in item["attributes"]])))
 
 
 def list_yard_items(data):
+    """Display list of items placed in yard."""
     if len(data["yard"]) > 0:
         things = [(item["name"], item["occupant"]) for item in data["yard"]]
         for thing in things:
@@ -58,6 +72,7 @@ def list_yard_items(data):
 
 
 def cats(data):
+    """Display cat activities."""
     # cats = [(obj, obj["occupant"]) for obj in data["yard"] if obj["occupied"]]
     # for cats:
     #     printer.p(data["prefix"], "{0} is playing with a {1}")
@@ -65,14 +80,17 @@ def cats(data):
 
 
 def place(data):
-    items_list = [item for item in data["items"].values() if "owned" in item["attributes"] and not item["in_yard"]]
+    """Place item in yard."""
+    items_list = [item for item in data["items"].values()
+                  if "owned" in item["attributes"] and not item["in_yard"]]
     # TODO: this is ultra gross
     placable_items = {}
     for item in items_list:
         if item["size"] < 6:
             placable_items[item["name"]] = item
     printer.yard(data["prefix"], "Here are the items that you can put in your yard: {0}".format(", ".join(placable_items.keys())))
-    inp = input("{.YARD}{}{.ENDC} Which item would you like to place? ".format(printer.PColors, data["prefix"], printer.PColors))
+    inp = input("{.YARD}{}{.ENDC} Which item would you like to place? ".format(
+        printer.PColors, data["prefix"], printer.PColors))
     if inp in placable_items.keys():
         try_to_place(data, placable_items[inp])
     else:
@@ -80,6 +98,7 @@ def place(data):
 
 
 def try_to_place(data, item):
+    """Attempt item placement in yard."""
     if sum([toy["size"] for toy in data["yard"]]) + item["size"] < data["space"]:
         data["yard"].append(item)
         item["in_yard"] = True
@@ -90,6 +109,7 @@ def try_to_place(data, item):
 
 
 def offer_replace(data, item):
+    """Replace an existing item in yard."""
     yard_items = [toy["name"] for toy in data["yard"]]
     printer.yard(data["prefix"], "Currently in your yard you have: a {0}".format(", and a".join(yard_items)))
     inp = input("{.YARD}{}{.ENDC} Would you like to replace any of the items in your yard? Which one? ".format(printer.PColors, data["prefix"], printer.PColors))
@@ -101,6 +121,7 @@ def offer_replace(data, item):
 
 
 def remove_from_yard(data, item_name):
+    """Remove item from yard."""
     # TODO: god help me
     to_remove = [item for item in data["yard"] if item["name"] == item_name]
     for item in to_remove:
@@ -110,6 +131,7 @@ def remove_from_yard(data, item_name):
 
 
 def check_food(data):
+    """Check food in yard."""
     if data["food_remaining"] == 0:
         printer.warn(data["prefix"], "Your yard currently doesn't have any food in it! No cats will come if there's no food!")
     else:
@@ -117,6 +139,7 @@ def check_food(data):
 
 
 def food(data):
+    """Display food placement options."""
     check_food(data)
     placable_items = {}
     for idx, item in enumerate(data["owned_food"]):
@@ -133,6 +156,7 @@ def food(data):
 
 
 def put_food_in_yard(data, arr_idx):
+    """Place food in yard."""
     food = data["owned_food"].pop(arr_idx)
     data["food"] = food["name"]
     data["food_remaining"] = food["size"]

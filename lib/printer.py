@@ -1,4 +1,14 @@
+"""
+Print output.
+
+This module handles special printing of output to player including
+colorization of game areas.
+"""
+
+
 class PColors:
+    """Define some colors up in this piece."""
+
     RED = '\033[31m'
     YELLOW = '\033[33m'
     GREEN = '\033[32m'
@@ -8,10 +18,11 @@ class PColors:
     HELP = '\033[36m'
     MAIN = '\033[37m'
     SHOP = '\033[95m'
-    YARD = '\033[92m'
+    YARD = '\033[32m'
     ENDC = '\033[0m'
 
     def disable(self):
+        """Disable colorization and revert to plain text."""
         self.RED = ''
         self.YELLOW = ''
         self.GREEN = ''
@@ -26,32 +37,87 @@ class PColors:
 
 
 def fail(prefix, words):
-    print("{.RED}{}{.ENDC} {}".format(PColors, prefix, PColors, words))
+    """Print failure messages."""
+    if prefix == '[Item Shop]':
+        print("{.SHOP}{}{.ENDC} {.RED}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, words, PColors))
+    elif prefix == '[Yard]':
+        print("{.YARD}{}{.ENDC} {.RED}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, words, PColors))
+    else:
+        print("{.MAIN}{}{.ENDC} {.YELLOW}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, words, PColors))
 
 
 def invalid(prefix, actions):
-    sorry_msg = "{.YELLOW}{}{.ENDC} Sorry, I don't understand. Options are: {}"
-    print(sorry_msg.format(PColors, prefix, PColors, ", ".join(actions)))
+    """Apology with guidance."""
+    sorry_msg = "Sorry, I don't understand. Options are:"
+    options = ", ".join(actions)
+    if prefix == '[Item Shop]':
+        print("{.SHOP}{}{.ENDC} {.YELLOW}{} {}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, sorry_msg, options, PColors))
+    elif prefix == '[The Yard]':
+        print("{.YARD}{}{.ENDC} {.YELLOW}{} {}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, sorry_msg, options, PColors))
+    else:
+        print("{.MAIN}{}{.ENDC} {.YELLOW}{} {}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, sorry_msg, options, PColors))
 
 
 def prompt(prefix, actions):
-    print("{0} Your options are: {1}".format(prefix, ", ".join(actions)))
+    """Action prompt."""
+    options = ", ".join(actions)
+    prompt = "Your options are:"
+    if prefix == '[Item Shop]':
+        print("{.SHOP}{}{.ENDC} {} {}".format(
+            PColors, prefix, PColors, prompt, options))
+    elif prefix == '[The Yard]':
+        print("{.YARD}{}{.ENDC} {} {}".format(
+            PColors, prefix, PColors, prompt, options))
+    else:
+        print("{.MAIN}{}{.ENDC} {} {}".format(
+            PColors, prefix, PColors, prompt, options))
 
 
 def p(prefix, words):
+    """Print plain messages."""
     print("{} {}".format(prefix, words))
 
 
 def shop(prefix, words):
+    """Print shop messages."""
     print("{.SHOP}{}{.ENDC} {}".format(PColors, prefix, PColors, words))
 
 
 def success(prefix, words):
-    print("{.GREEN}{}{.ENDC} {}".format(PColors, prefix, PColors, words))
+    """Print success messages."""
+    if prefix == '[Item Shop]':
+        print("{.SHOP}{}{.ENDC} {.GREEN}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, words, PColors))
+    elif prefix == '[The Yard]':
+        print("{.YARD}{}{.ENDC} {.GREEN}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, words, PColors))
+    elif prefix == '[Welcome!]':
+        print("{.YARD}{}{.ENDC} {.GREEN}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, words, PColors))
+    else:
+        print("{.MAIN}{}{.ENDC} {.GREEN}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, words, PColors))
 
 
 def warn(prefix, words):
-    print("{.YELLOW}{}{.ENDC} {}".format(PColors, prefix, PColors, words))
+    """Print warning messages."""
+    if prefix == '[Item Shop]':
+        print("{.SHOP}{}{.ENDC} {.YELLOW}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, words, PColors))
+    elif prefix == '[The Yard]':
+        print("{.YARD}{}{.ENDC} {.YELLOW}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, words, PColors))
+    else:
+        print("{.MAIN}{}{.ENDC} {.YELLOW}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, words, PColors))
+
 
 def yard(prefix, words):
+    """Print yard messages."""
     print("{.GREEN}{}{.ENDC} {}".format(PColors, prefix, PColors, words))
