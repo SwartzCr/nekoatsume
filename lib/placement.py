@@ -50,9 +50,11 @@ def exit(data):
 
 def list_owned_items(data):
     """Display a list of owned items."""
-    printer.yard(data["prefix"], "You currently own a {0}".format(
-        ", and a ".join([item["name"] for item in data["items"].values()
-                         if "owned" in item["attributes"]])))
+    owned_items = [item["name"] for item in data["items"].values() if "owned" in item["attributes"]]
+    if len(owned_items) == 0:
+        printer.warn(data["prefix"], "You don't own any items, better go buy some in the shop~!")
+    else:
+        printer.yard(data["prefix"], "You currently own a {0}".format(", and a ".join(owned_items)))
 
 
 def list_yard_items(data):
