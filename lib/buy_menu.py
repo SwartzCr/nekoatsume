@@ -4,7 +4,7 @@ Buy some items.
 This module controls the item shop and related transactions.
 """
 
-import printer
+from lib import printer
 DEMARCATION = 6
 
 try:

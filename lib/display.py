@@ -5,17 +5,16 @@ These are the functions which show the player what is happening in the game.
 """
 
 from __future__ import print_function
-import buy_menu
-import data_constructor
+from lib import buy_menu
+from lib import data_constructor
 import datetime
 import json
 import os
-import placement
-import printer
+# import sys
+from lib import placement
+from lib import printer
 import time
-import update
-# DEBUG
-# import pdb
+from lib import update
 
 try:
     input = raw_input
@@ -25,8 +24,6 @@ except NameError:
 
 def store_data(data):
     """Purrsist the data."""
-    # DEBUG
-    # pdb.set_trace()
     data_file = os.getcwd() + '/var/data.json'
     with open(data_file, 'w') as f:
         json.dump(data, f)
@@ -47,13 +44,11 @@ def prep_data_on_close(data):
 
 def banner():
     """Welcome banner."""
-    print("             {.RED}_{.ENDC}".format(printer.PColors, printer.PColors))
-    print("            {.RED}| |                    _{.ENDC}".format(printer.PColors, printer.PColors))
-    print(" {.YELLOW}____  _____| |  _ ___     _____ _| |_  ___ _   _ ____  _____{.ENDC}".format(printer.PColors, printer.PColors))
-    print("{.GREEN}|  _ \| ___ | |_/ ) _ \   (____ (_   _)/___) | | |    \| ___ |{.ENDC}".format(printer.PColors, printer.PColors))
-    print("{.BLUE}| | | | ____|  _ ( |_| |  / ___ | | |_|___ | |_| | | | | ____|{.ENDC}".format(printer.PColors, printer.PColors))
-    print("{.PURPLE}|_| |_|_____)_| \_)___/   \_____|  \__|___/|____/|_|_|_|_____){.ENDC}\n".format(printer.PColors, printer.PColors))
-
+    banner_file = os.getcwd() + '/share/banner.dat'
+    with open(banner_file, 'r') as b:
+        for l in b:
+            print(l.format(printer.PColors, printer.PColors), end='')
+        print('\n')
 
 """
 TODO: this should be remade but where we just take the time diff
@@ -156,7 +151,6 @@ def main():
             printer.PColors, printer.PColors)
         printer.prompt(data["prefix"], actions.keys())
         inp = input("{0} Choose an action! ".format(data["prefix"]))
-        # pdb.set_trace()
         if inp in actions:
             actions[inp](data)
             continue
