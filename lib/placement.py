@@ -4,7 +4,7 @@ Place items.
 This module handles the placement of food and toys in the yard.
 """
 
-import printer
+from lib import printer
 
 try:
     input = raw_input
