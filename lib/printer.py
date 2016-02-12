@@ -38,7 +38,16 @@ class PColors:
 
 def invalid(prefix):
     """Apologize for not understand user input"""
-    print("{0} Sorry, I didn't understand that.".format(prefix))
+    sorry_msg = "Sorry, I don't understand."
+    if prefix == '[Item Shop]':
+        print("{.SHOP}{}{.ENDC} {.YELLOW}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, sorry_msg, PColors))
+    elif prefix == '[The Yard]':
+        print("{.YARD}{}{.ENDC} {.YELLOW}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, sorry_msg, PColors))
+    else:
+        print("{.MAIN}{}{.ENDC} {.YELLOW}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, sorry_msg, PColors))
 
 def fail(prefix, words):
     """Print failure messages."""
