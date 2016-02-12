@@ -36,6 +36,19 @@ class PColors:
         self.ENDC = ''
 
 
+def invalid(prefix):
+    """Apologize for not understand user input"""
+    sorry_msg = "Sorry, I don't understand."
+    if prefix == '[Item Shop]':
+        print("{.SHOP}{}{.ENDC} {.YELLOW}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, sorry_msg, PColors))
+    elif prefix == '[The Yard]':
+        print("{.YARD}{}{.ENDC} {.YELLOW}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, sorry_msg, PColors))
+    else:
+        print("{.MAIN}{}{.ENDC} {.YELLOW}{}{.ENDC}".format(
+            PColors, prefix, PColors, PColors, sorry_msg, PColors))
+
 def fail(prefix, words):
     """Print failure messages."""
     if prefix == '[Item Shop]':
@@ -47,22 +60,6 @@ def fail(prefix, words):
     else:
         print("{.MAIN}{}{.ENDC} {.YELLOW}{}{.ENDC}".format(
             PColors, prefix, PColors, PColors, words, PColors))
-
-
-def invalid(prefix, actions):
-    """Apology with guidance."""
-    sorry_msg = "Sorry, I don't understand. Options are:"
-    options = ", ".join(actions)
-    if prefix == '[Item Shop]':
-        print("{.SHOP}{}{.ENDC} {.YELLOW}{} {}{.ENDC}".format(
-            PColors, prefix, PColors, PColors, sorry_msg, options, PColors))
-    elif prefix == '[The Yard]':
-        print("{.YARD}{}{.ENDC} {.YELLOW}{} {}{.ENDC}".format(
-            PColors, prefix, PColors, PColors, sorry_msg, options, PColors))
-    else:
-        print("{.MAIN}{}{.ENDC} {.YELLOW}{} {}{.ENDC}".format(
-            PColors, prefix, PColors, PColors, sorry_msg, options, PColors))
-
 
 def prompt(prefix, actions):
     """Action prompt."""

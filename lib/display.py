@@ -161,4 +161,4 @@ def main():
             actions[inp](data)
             continue
         else:
-            printer.invalid(data["prefix"], actions.keys())
+            printer.invalid(data["prefix"])

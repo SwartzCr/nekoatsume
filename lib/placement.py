@@ -35,7 +35,7 @@ def menu(data):
             actions[inp](data)
             continue
         else:
-            printer.invalid(data["prefix"], actions.keys())
+            printer.invalid(data["prefix"])
 
 
 def compute_space(data):
