@@ -14,7 +14,7 @@ cd nekoatsume
 
 This builds all required database objects and begins your game:
 
-![](https://raw.githubusercontent.com/brianshumate/nekoatsume/nekoatsume-cmd/share/screenshot.png)
+![](https://raw.githubusercontent.com/SwartzCr/nekoatsume/master/share/screenshot.png)
 
 The game doesn't currently obfurscate its data directory, stored as a large
 JSON file in `var/data.json` that gets read between plays.
