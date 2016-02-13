@@ -10,6 +10,7 @@ from lib import data_constructor
 import datetime
 import json
 import os
+import pdb
 # import sys
 from lib import placement
 from lib import printer
@@ -28,6 +29,8 @@ def store_data(data):
     with open(data_file, 'w') as f:
         json.dump(data, f)
 
+def debug(data):
+    pdb.set_trace()
 
 def load_data():
     """Load the data."""
@@ -140,7 +143,8 @@ def main():
                "yard": placement.menu,
                "collect money": collect_money,
                "check food": placement.check_food,
-               "help": print_help}
+               "help": print_help,
+               "debug": debug}
     banner()
     data["prefix"] = "{.BLUE}[Welcome!]{.ENDC}".format(
         printer.PColors, printer.PColors)
