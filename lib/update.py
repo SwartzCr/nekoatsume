@@ -60,7 +60,7 @@ def pay_up(data, cat):
 
 def free_up_toy_cat(data, cat):
     """Cat stops playing with toy."""
-    toy = cat["on_toy"]
+    toy = [toy for toy in data["yard"] if toy["name"] == cat["on_toy"]][0]
     cat["on_toy"] = ""
     cat["in_yard"] = False
     cat["time_in_yard"] = 0
@@ -82,5 +82,5 @@ def new_cats(data):
             toy = open_toys.pop(0)
             toy["occupied"] = True
             toy["occupant"] = cat
-            cat["on_toy"] = toy
+            cat["on_toy"] = toy["name"]
             cat["in_yard"] = True

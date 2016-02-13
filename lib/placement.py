@@ -15,8 +15,6 @@ except NameError:
 def menu(data):
     """Display yard menu."""
     data["prefix"] = "[The Yard]".format(printer.PColors, printer.PColors)
-    # printer.p(data["prefix"], "You have {0} spaces open in your yard"
-    # .format(compute_space(data)))
     list_yard_items(data)
     data["placing"] = True
     actions = {"list owned items": list_owned_items,
@@ -26,8 +24,6 @@ def menu(data):
                "place food": food,
                "leave yard": exit}
     while data["placing"]:
-        # FIXME: with printer.prompt here and printer.invalid on unknown
-        #        input, the options are doubled up after an unknown input
         printer.prompt(data["prefix"], actions.keys())
         inp = input("{.YARD}{}{.ENDC} What do you want to do? ".format(
             printer.PColors, data["prefix"], printer.PColors))
@@ -90,6 +86,7 @@ def place(data):
     # TODO: this is ultra gross
     placable_items = {}
     for item in items_list:
+        #deliniate placable items from things like food
         if item["size"] < 6:
             placable_items[item["name"]] = item
     printer.yard(data["prefix"], "Here are the items that you can put in your yard: {0}".format(", ".join(placable_items.keys())))
