@@ -26,6 +26,7 @@ def build_data():
     data["seen_cats"] = []
     data["start"] = cur_time
     data["pending_money"] = []
+    data["pending_treasures"] = []
     build_items(data)
     build_cats(data)
     store_data(data)
