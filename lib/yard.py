@@ -56,14 +56,11 @@ def list_owned_items(data):
 def list_yard_items(data):
     """Display list of items placed in yard."""
     if len(data["yard"]) > 0:
-        things = [(item["name"], item["occupant"]) for item in data["yard"]]
-        for thing in things:
-            cat = "no one"
-            if thing[1]:
-                try:
-                    cat = thing[1][0]["name"]
-                except:
-                    pass
+        items = [item for item in data["yard"]]
+        for item in items:
+            cats = "no one"
+            if item["occupied"]:
+                cats = ", and ".join([cat["name"] for cat in item["occupant"]])
             printer.yard(data["prefix"], "Your yard currently has a {0} in it, occupied by {1}".format(thing[0], cat))
     # TODO: add cat descriptions
     else:

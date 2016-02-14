@@ -64,13 +64,14 @@ def free_up_toy_cat(data, cat):
     cat["on_toy"] = ""
     cat["in_yard"] = False
     cat["time_in_yard"] = 0
-    toy["occupied"] = False
-    toy["occupant"] = ""
+    toy["occupant"].remove(cat)
+    if len(toy["occupant"] == 0):
+        toy["occupied"] = False
 
 
 def new_cats(data):
     """A new cat appears."""
-    open_toys = [toy for toy in data["yard"] if not toy["occupied"]]
+    open_toys = [toy for toy in data["yard"] if len(toy["occupied"]) < toy["size"]]
     random.shuffle(open_toys)
     eligible_cats = [data["cats"][cat]
                      for cat in data["cats"].keys()
@@ -81,6 +82,6 @@ def new_cats(data):
         if random.random() + cat["mod"] > 1:
             toy = open_toys.pop(0)
             toy["occupied"] = True
-            toy["occupant"] = cat
+            toy["occupant"].append(cat)
             cat["on_toy"] = toy["name"]
             cat["in_yard"] = True
