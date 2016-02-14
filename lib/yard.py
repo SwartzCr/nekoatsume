@@ -16,14 +16,14 @@ def menu(data):
     """Display yard menu."""
     data["prefix"] = "[The Yard]".format(printer.PColors, printer.PColors)
     list_yard_items(data)
-    data["placing"] = True
+    data["in_yard"] = True
     actions = {"list owned items": list_owned_items,
                "examine yard": list_yard_items,
                "cats": cats,
                "place toy": place,
                "place food": food,
                "leave yard": exit}
-    while data["placing"]:
+    while data["in_yard"]:
         printer.prompt(data["prefix"], actions.keys())
         inp = input("{.YARD}{}{.ENDC} What do you want to do? ".format(
             printer.PColors, data["prefix"], printer.PColors))
@@ -41,7 +41,7 @@ def compute_space(data):
 
 def exit(data):
     """Cancel item placement."""
-    data["placing"] = False
+    data["in_yard"] = False
 
 
 def list_owned_items(data):

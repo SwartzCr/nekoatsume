@@ -11,7 +11,7 @@ import datetime
 import json
 import os
 # import sys
-from lib import placement
+from lib import yard
 from lib import printer
 import time
 from lib import update
@@ -87,7 +87,7 @@ def desc_yard(data):
 
 def check_status(data):
     """Check status of items in yard."""
-    placement.list_yard_items(data)
+    yard.list_yard_items(data)
 
 
 def collect_money(data):
@@ -137,9 +137,9 @@ def main():
     actions = {"quit": quit,
                "look": check_status,
                "shop": buy_menu.menu,
-               "yard": placement.menu,
+               "yard": yard.menu,
                "collect money": collect_money,
-               "check food": placement.check_food,
+               "check food": yard.check_food,
                "help": print_help}
     banner()
     data["prefix"] = "{.BLUE}[Welcome!]{.ENDC}".format(
