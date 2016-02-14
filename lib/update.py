@@ -63,6 +63,7 @@ def free_up_toy_cat(data, cat):
     toy = [toy for toy in data["yard"] if toy["name"] == cat["on_toy"]][0]
     cat["on_toy"] = ""
     cat["in_yard"] = False
+    cat["total_time_in_yard"] += cat["time_in_yard"]
     cat["time_in_yard"] = 0
     toy["occupant"].remove(cat)
     if len(toy["occupant"] == 0):
@@ -85,3 +86,6 @@ def new_cats(data):
             toy["occupant"].append(cat)
             cat["on_toy"] = toy["name"]
             cat["in_yard"] = True
+            if cat["total_time_in_yard"] > 3000 and not cat["given_treasure"]:
+                cat["given_treasure"] = True
+                data["pending_treasures"].append((cat["name"], cat["treasure"]))

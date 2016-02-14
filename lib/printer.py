@@ -19,6 +19,7 @@ class PColors:
     MAIN = '\033[37m'
     SHOP = '\033[95m'
     YARD = '\033[32m'
+    TREASURE = '\033[35m'
     ENDC = '\033[0m'
 
     def disable(self):

@@ -89,6 +89,19 @@ def check_status(data):
     """Check status of items in yard."""
     yard.list_yard_items(data)
 
+def recieve_treasures(data):
+    temp = "{.TREASURE}[TREASURE]{.ENDC}".format(
+            printer.PColors, printer.PColors)
+    for treasure in data["pending_treasures"]:
+        printer.p(temp, "{0} gave you a treasure! {1}!!!".format(
+                 treasure[0], treasure[1]))
+
+def check_treasures(data):
+    temp = "{.TREASURE}[TREASURE]{.ENDC}".format(
+            printer.PColors, printer.PColors)
+    for [cat in data["cats"] if cat["given_treasure"]]:
+        printer.p(temp, "You have a treasure from {0}! {1}!!!".format(
+                cat["name"], cat["treasure"]))
 
 def collect_money(data):
     """Collect money left by cats."""
@@ -140,11 +153,13 @@ def main():
                "yard": yard.menu,
                "collect money": collect_money,
                "check food": yard.check_food,
+               "check treasures": check_treasures,
                "help": print_help}
     banner()
     data["prefix"] = "{.BLUE}[Welcome!]{.ENDC}".format(
         printer.PColors, printer.PColors)
     check_status(data)
+    recieve_treasures(data)
     data["prefix"] = "[Main Menu]"
     while data["want_to_play"] is True:
         data["prefix"] = "{.MAIN}[Main Menu]{.ENDC}".format(

@@ -80,6 +80,7 @@ def make_cat(name, desc, treasure, mod):
     return {"name": name,
             "desc": desc,
             "time_in_yard": 0,
+            "total_time_in_yard": 0,
             "on_toy": {},
             "in_yard": False,
             "treasure": treasure,
