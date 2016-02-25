@@ -15,6 +15,8 @@ from lib import yard
 from lib import printer
 import time
 from lib import update
+import readline
+
 
 try:
     input = raw_input
@@ -136,6 +138,25 @@ def quit(data):
     prep_data_on_close(data)
 
 
+class actionCompleter(object):
+
+    def __init__(self):
+        return
+
+    def set_actions(self, actions):
+        self.actions = sorted(actions)
+
+    def complete(self, action, index):
+        if index == 0:
+            if action:
+                self.matches = [a for a in self.actions if a.startswith(action)]
+            else:
+                self.matches = self.actions[:]
+        response = self.matches[index]
+        if response:
+            return response
+
+
 def main():
     """Main game function."""
     try:
@@ -161,7 +182,12 @@ def main():
     check_status(data)
     recieve_treasures(data)
     data["prefix"] = "[Main Menu]"
+    data["completer"] = actionCompleter()
+
+    readline.set_completer(data["completer"].complete)
+    readline.parse_and_bind('tab: complete')
     while data["want_to_play"] is True:
+        data["completer"].set_actions(actions.keys())
         data["prefix"] = "{.MAIN}[Main Menu]{.ENDC}".format(
             printer.PColors, printer.PColors)
         printer.prompt(data["prefix"], actions.keys())
@@ -171,3 +197,4 @@ def main():
             continue
         else:
             printer.invalid(data["prefix"])
+

@@ -27,6 +27,7 @@ def menu(data):
                "list items": list_items,
                "leave shop": exit_buy}
     while data["want_to_buy"]:
+        data["completer"].set_actions(actions.keys())
         printer.prompt("{.SHOP}{}{.ENDC}".format(
             printer.PColors, data["prefix"], printer.PColors), actions.keys())
         inp = input("{.SHOP}{}{.ENDC} What do you want to do? ".format(
@@ -77,6 +78,7 @@ def ex_item(data):
     items = data["items"].keys()
     printer.shop(
         data["prefix"], "Here are the items you can see: " + ", ".join(items))
+    data["completer"].set_actions(items)
     inp = input("{.SHOP}{}{.ENDC} which would you like to examine? ".format(
         printer.PColors, data["prefix"], printer.PColors))
     if inp in items:
@@ -92,6 +94,7 @@ def buy_item(data):
     """Buy an item."""
     buyable_items = [item for item in data["items"].keys()
                      if data["items"][item]["attributes"] == []]
+    data["completer"].set_actions(buyable_items)
     inp = input("{.SHOP}{}{.ENDC} What item would you like to buy? ".format(
         printer.PColors, data["prefix"], printer.PColors))
     if inp in buyable_items:
