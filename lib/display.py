@@ -27,6 +27,7 @@ except NameError:
 def store_data(data):
     """Purrsist the data."""
     data_file = os.getcwd() + '/var/data.json'
+    del data["completer"]
     with open(data_file, 'w') as f:
         json.dump(data, f)
 
@@ -147,13 +148,16 @@ class actionCompleter(object):
         self.actions = sorted(actions)
 
     def complete(self, action, index):
+        buf = readline.get_line_buffer()
         if index == 0:
-            if action:
-                self.matches = [a for a in self.actions if a.startswith(action)]
+            if buf != "":
+                self.matches = [a for a in self.actions if a.startswith(buf)]
             else:
                 self.matches = self.actions[:]
         response = self.matches[index]
         if response:
+            if action != buf:
+                response = response[len(buf)-len(action):]
             return response
 
 
