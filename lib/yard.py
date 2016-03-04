@@ -24,6 +24,7 @@ def menu(data):
                "place food": food,
                "leave yard": exit}
     while data["in_yard"]:
+        data["completer"].set_actions(actions.keys())
         printer.prompt(data["prefix"], actions.keys())
         inp = input("{.YARD}{}{.ENDC} What do you want to do? ".format(
             printer.PColors, data["prefix"], printer.PColors))
@@ -86,6 +87,7 @@ def place(data):
         #deliniate placable items from things like food
         if item["size"] < 6:
             placable_items[item["name"]] = item
+    data["completer"].set_actions(placable_items.keys())
     printer.yard(data["prefix"], "Here are the items that you can put in your yard: {0}".format(", ".join(placable_items.keys())))
     inp = input("{.YARD}{}{.ENDC} Which item would you like to place? ".format(
         printer.PColors, data["prefix"], printer.PColors))
@@ -110,6 +112,7 @@ def offer_replace(data, item):
     """Replace an existing item in yard."""
     yard_items = [toy["name"] for toy in data["yard"]]
     printer.yard(data["prefix"], "Currently in your yard you have: a {0}".format(", and a".join(yard_items)))
+    data["completer"].set_actions(yard_items)
     inp = input("{.YARD}{}{.ENDC} Would you like to replace any of the items in your yard? Which one? ".format(printer.PColors, data["prefix"], printer.PColors))
     if inp in yard_items:
         remove_from_yard(data, inp)
@@ -148,6 +151,7 @@ def food(data):
     printer.yard(data["prefix"], "Here's what you can place:")
     for key in placable_items.keys():
         printer.yard(data["prefix"], "A {0} ({1})".format(key, placable_items[key][0]))
+    data["completer"].set_actions(placable_items.keys())
     to_place = input("{.YARD}{}{.ENDC} Which would you like to place? (hit ENTER if none) ".format(printer.PColors, data["prefix"], printer.PColors))
     if to_place in placable_items.keys():
         put_food_in_yard(data, placable_items[to_place][1])
