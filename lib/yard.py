@@ -62,7 +62,7 @@ def list_yard_items(data):
             cats = "no one"
             if item["occupied"]:
                 cats = ", and ".join([cat["name"] for cat in item["occupant"]])
-            printer.yard(data["prefix"], "Your yard currently has a {0} in it, occupied by {1}".format(thing[0], cat))
+            printer.yard(data["prefix"], "Your yard currently has a {0} in it, occupied by {1}".format(item["name"], cats))
     # TODO: add cat descriptions
     else:
         printer.warn(data["prefix"], "You currently have nothing in your yard, how sad")
