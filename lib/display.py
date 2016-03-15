@@ -102,7 +102,7 @@ def recieve_treasures(data):
 def check_treasures(data):
     temp = "{.TREASURE}[TREASURE]{.ENDC}".format(
             printer.PColors, printer.PColors)
-    for cat in [cat for cat in data["cats"] if cat["given_treasure"]]:
+    for cat in [cat for cat in data["cats"].itervalues() if cat["given_treasure"]]:
         printer.p(temp, "You have a treasure from {0}! {1}!!!".format(
                 cat["name"], cat["treasure"]))
 
