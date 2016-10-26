@@ -16,7 +16,7 @@ from lib import printer
 import time
 from lib import update
 import readline
-
+import random
 
 try:
     input = raw_input
@@ -92,12 +92,36 @@ def check_status(data):
     """Check status of items in yard."""
     yard.list_yard_items(data)
 
+def bestow_treasures(data, prev_start):
+    """Randomly decide whether or not to give the user a treasure."""
+    if not prev_start:
+        return
+    not_given = [cat for cat in data["cats"].itervalues() if cat["total_time_in_yard"] > 0 and not cat["given_treasure"]]
+    if len(not_given) is 0:
+        return
+    since_last_run = data["start"] - prev_start
+    if since_last_run < 0:
+        since_last_run = 0
+    absent = since_last_run / datetime.timedelta(days=7).total_seconds()
+    bonus = min(1.0, absent)
+    base = 0.05
+    prob = base + (base*bonus)
+    rnd = random.random() # may the RNG bless you
+    if rnd >= prob:
+        return
+    giver = random.choice(not_given)
+    data["cats"][giver["name"]]["given_treasure"] = True
+    data["pending_treasures"].append([giver["name"], giver["treasure"]])
+
 def recieve_treasures(data):
+    if len(data["pending_treasures"]) is 0:
+        return
     temp = "{.TREASURE}[TREASURE]{.ENDC}".format(
             printer.PColors, printer.PColors)
     for treasure in data["pending_treasures"]:
         printer.p(temp, "{0} gave you a treasure! {1}!!!".format(
                  treasure[0], treasure[1]))
+    data["pending_treasures"] = []
 
 def check_treasures(data):
     temp = "{.TREASURE}[TREASURE]{.ENDC}".format(
@@ -171,6 +195,7 @@ def main():
         data_constructor.build_data()
         data = load_data()
     data["want_to_play"] = True
+    prev_start = data.get("start", None)
     data["start"] = time.time()
     actions = {"quit": quit,
                "look": check_status,
@@ -184,6 +209,7 @@ def main():
     data["prefix"] = "{.BLUE}[Welcome!]{.ENDC}".format(
         printer.PColors, printer.PColors)
     check_status(data)
+    bestow_treasures(data, prev_start)
     recieve_treasures(data)
     data["prefix"] = "[Main Menu]"
     data["completer"] = actionCompleter()
