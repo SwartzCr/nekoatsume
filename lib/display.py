@@ -27,7 +27,8 @@ except NameError:
 def store_data(data):
     """Purrsist the data."""
     data_file = os.getcwd() + '/var/data.json'
-    del data["completer"]
+    if data.get("completer"):
+        del data["completer"]
     with open(data_file, 'w') as f:
         json.dump(data, f)
 
@@ -185,15 +186,8 @@ class actionCompleter(object):
             return response
 
 
-def main():
+def main(data):
     """Main game function."""
-    try:
-        data = load_data()
-        data = update.update(data)
-    except:
-        # print(sys.exc_info())
-        data_constructor.build_data()
-        data = load_data()
     data["want_to_play"] = True
     prev_start = data.get("start", None)
     data["start"] = time.time()
@@ -228,3 +222,16 @@ def main():
         else:
             printer.invalid(data["prefix"])
 
+def run():
+    try:
+        try:
+            data = load_data()
+            data = update.update(data)
+        except:
+            data_constructor.build_data()
+            data = load_data()
+        main(data)
+    except:
+        pass
+    finally:
+        prep_data_on_close(data)
