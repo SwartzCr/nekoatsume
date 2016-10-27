@@ -72,7 +72,7 @@ def free_up_toy_cat(data, cat):
 
 def new_cats(data):
     """A new cat appears."""
-    open_toys = [toy for toy in data["yard"] if len(toy["occupied"]) < toy["size"]]
+    open_toys = [toy for toy in data["yard"] if len(toy["occupant"]) < toy["size"]]
     random.shuffle(open_toys)
     eligible_cats = [data["cats"][cat]
                      for cat in data["cats"].keys()
