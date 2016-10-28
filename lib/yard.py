@@ -71,10 +71,11 @@ def list_yard_items(data):
 
 def cats(data):
     """Display cat activities."""
-    # cats = [(obj, obj["occupant"]) for obj in data["yard"] if obj["occupied"]]
-    # for cats:
-    #     printer.p(data["prefix"], "{0} is playing with a {1}")
-    return
+    yard_items = [(obj, obj["occupant"]) for obj in data["yard"] if obj["occupied"]]
+    for item in yard_items:
+        cats = item[1]
+        for cat in cats:
+            printer.p(data["prefix"], "{0} is playing with a {1}".format(cat['name'], item[0]['name']))
 
 
 def place(data):

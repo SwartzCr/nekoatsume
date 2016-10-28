@@ -228,12 +228,9 @@ def run():
         try:
             data = load_data()
             data = update.update(data)
-        except:
-            if not data:
-                data_constructor.build_data()
-                data = load_data()
-            else:
-                raise Exception("It looks like there's a bug in the update function :(")
+        except IOError:
+            data_constructor.build_data()
+            data = load_data()
         main(data)
     except Exception as e:
         print(e)
