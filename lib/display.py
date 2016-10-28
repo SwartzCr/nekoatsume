@@ -224,14 +224,18 @@ def main(data):
 
 def run():
     try:
+        data = []
         try:
             data = load_data()
             data = update.update(data)
         except:
-            data_constructor.build_data()
-            data = load_data()
+            if not data:
+                data_constructor.build_data()
+                data = load_data()
+            else:
+                raise Exception("It looks like there's a bug in the update function :(")
         main(data)
-    except:
-        pass
+    except Exception as e:
+        print(e)
     finally:
         prep_data_on_close(data)
