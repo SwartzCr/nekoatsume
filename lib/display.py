@@ -202,6 +202,7 @@ def main(data):
     banner()
     data["prefix"] = "{.BLUE}[Welcome!]{.ENDC}".format(
         printer.PColors, printer.PColors)
+    #TODO track all seen cats at this point, add them to some sort of cat index
     check_status(data)
     bestow_treasures(data, prev_start)
     recieve_treasures(data)
@@ -224,14 +225,15 @@ def main(data):
 
 def run():
     try:
+        data = []
         try:
             data = load_data()
             data = update.update(data)
-        except:
+        except IOError:
             data_constructor.build_data()
             data = load_data()
         main(data)
-    except:
-        pass
+    except Exception as e:
+        print(e)
     finally:
         prep_data_on_close(data)
