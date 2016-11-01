@@ -202,6 +202,7 @@ def main(data):
     banner()
     data["prefix"] = "{.BLUE}[Welcome!]{.ENDC}".format(
         printer.PColors, printer.PColors)
+    #TODO track all seen cats at this point, add them to some sort of cat index
     check_status(data)
     bestow_treasures(data, prev_start)
     recieve_treasures(data)

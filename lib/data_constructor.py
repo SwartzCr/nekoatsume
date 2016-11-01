@@ -47,6 +47,10 @@ def make_item(name, cost, cur, size, desc):
 # TODO: Keep data in JSON file to simplify this function
 #       Consider something like Marshmallow for deserialization into app objs
 #       https://marshmallow.readthedocs.org/en/latest/
+# TODO: add a section to each item that is a list of actions that a cat can take
+#       on it. Maybe there can be some static lists per type of item. Such as
+#       climbable = ["is on top of", "is clawing at", "is jumping off of"]
+#       then add that to the end of each item
 def build_items(data):
     data["items"]["rubber ball"] = make_item("rubber ball", 5, "s", 1, "a small bright orange rubber ball, it's squishy and squeaky!")
     data["items"]["sparkle ball"] = make_item("sparkle ball", 5, "g", 1, "a small clear rubber ball filled with colorful sparkling glitter!")

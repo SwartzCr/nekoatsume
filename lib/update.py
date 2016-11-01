@@ -31,6 +31,7 @@ def tick(time_left, data):
 
 def update_yard_cats(data):
     """Update status of cats in yard."""
+    #TODO don't double place cats
     yard_cats = [data["cats"][cat]
                  for cat in data["cats"].keys()
                  if data["cats"][cat]["in_yard"] is True]
@@ -54,7 +55,7 @@ def pay_up(data, cat):
     """Leave money for player."""
     amount = cat["time_in_yard"]
     percent = random.randint(5, 10) / 10.0
-    money_to_pay = round(amount * percent)
+    money_to_pay = int(round(amount * percent))
     data["pending_money"].append((cat["name"], money_to_pay))
 
 
@@ -66,7 +67,7 @@ def free_up_toy_cat(data, cat):
     cat["total_time_in_yard"] += cat["time_in_yard"]
     cat["time_in_yard"] = 0
     toy["occupant"].remove(cat)
-    if len(toy["occupant"] == 0):
+    if len(toy["occupant"]) == 0:
         toy["occupied"] = False
 
 

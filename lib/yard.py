@@ -17,6 +17,7 @@ def menu(data):
     data["prefix"] = "[The Yard]".format(printer.PColors, printer.PColors)
     list_yard_items(data)
     data["in_yard"] = True
+    #TODO add a picture taking option
     actions = {"list owned items": list_owned_items,
                "examine yard": list_yard_items,
                "cats": cats,
@@ -63,19 +64,39 @@ def list_yard_items(data):
             if item["occupied"]:
                 cats = ", and ".join([cat["name"] for cat in item["occupant"]])
             printer.yard(data["prefix"], "Your yard currently has a {0} in it, occupied by {1}".format(item["name"], cats))
+        cat_activities(data)
     # TODO: add cat descriptions
     else:
         printer.warn(data["prefix"], "You currently have nothing in your yard, how sad")
     check_food(data)
 
 
-def cats(data):
+def cat_activities(data):
     """Display cat activities."""
     yard_items = [(obj, obj["occupant"]) for obj in data["yard"] if obj["occupied"]]
     for item in yard_items:
         cats = item[1]
         for cat in cats:
             printer.p(data["prefix"], "{0} is playing with a {1}".format(cat['name'], item[0]['name']))
+
+def cats(data):
+    """Allow you to look at the cats in your yard"""
+    cats_in_yard = []
+    [cats_in_yard.extend(obj["occupant"]) for obj in data["yard"] if obj["occupied"]]
+    cat_names = [cat['name'] for cat in cats_in_yard]
+    data["completer"].set_actions(cat_names)
+    printer.yard(data["prefix"], "These are the cats in your yard:")
+    for cat in cat_names:
+        printer.yard(data["prefix"],cat)
+    inp = input("{.YARD}{}{.ENDC} Which cat would you like to look at? ".format(
+        printer.PColors, data["prefix"], printer.PColors))
+    if inp in cat_names:
+        desc_cat(data, [cat for cat in cats_in_yard if cat["name"] == inp][0])
+    else:
+        printer.warn(data["prefix"], "I'm sorry that cat isn't in your yard!")
+
+def desc_cat(data, cat):
+    printer.yard(data["prefix"], cat["desc"])
 
 
 def place(data):
