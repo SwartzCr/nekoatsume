@@ -10,7 +10,7 @@ from lib import data_constructor
 import datetime
 import json
 import os
-# import sys
+import sys
 from lib import yard
 from lib import printer
 import time
@@ -127,9 +127,13 @@ def recieve_treasures(data):
 def check_treasures(data):
     temp = "{.TREASURE}[TREASURE]{.ENDC}".format(
             printer.PColors, printer.PColors)
-    for cat in [cat for cat in data["cats"].itervalues() if cat["given_treasure"]]:
-        printer.p(temp, "You have a treasure from {0}! {1}!!!".format(
-                cat["name"], cat["treasure"]))
+    treasures = [cat for cat in data["cats"].itervalues() if cat["given_treasure"]]
+    if treasures:
+        for cat in treasures:
+            printer.p(temp, "You have a treasure from {0}! {1}!!!".format(
+                    cat["name"], cat["treasure"]))
+    else:
+        printer.p(temp, "Aww, no cats have given you treasures yet.. But don't worry! Keep trying and I'm sure they will!!")
 
 def collect_money(data):
     """Collect money left by cats."""
@@ -234,6 +238,8 @@ def run():
             data = load_data()
         main(data)
     except Exception as e:
-        print(e)
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_obj, exc_tb.tb_lineno)
     finally:
         prep_data_on_close(data)

@@ -62,7 +62,7 @@ def list_yard_items(data):
         for item in items:
             cats = "no one"
             if item["occupied"]:
-                cats = ", and ".join([cat["name"] for cat in item["occupant"]])
+                cats = ", and ".join([cat for cat in item["occupant"]])
             printer.yard(data["prefix"], "Your yard currently has a {0} in it, occupied by {1}".format(item["name"], cats))
         cat_activities(data)
     # TODO: add cat descriptions
@@ -77,13 +77,13 @@ def cat_activities(data):
     for item in yard_items:
         cats = item[1]
         for cat in cats:
-            printer.p(data["prefix"], "{0} is playing with a {1}".format(cat['name'], item[0]['name']))
+            printer.p(data["prefix"], "{0} is playing with a {1}".format(cat, item[0]['name']))
 
 def cats(data):
     """Allow you to look at the cats in your yard"""
     cats_in_yard = []
     [cats_in_yard.extend(obj["occupant"]) for obj in data["yard"] if obj["occupied"]]
-    cat_names = [cat['name'] for cat in cats_in_yard]
+    cat_names = [cat for cat in cats_in_yard]
     data["completer"].set_actions(cat_names)
     printer.yard(data["prefix"], "These are the cats in your yard:")
     for cat in cat_names:

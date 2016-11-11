@@ -61,7 +61,7 @@ def build_items(data):
     data["items"]["scratching post"] = make_item("scratching post", 5, "g", 1, "A nice post for your cats to scratch!")
     data["items"]["fancy scratching post"] = make_item("fancy scratching post", 15, "g", 1, "A fancy deluxe hardwood and faux leather scratching post!")
     data["items"]["fishbowl"] = make_item("fishbowl", 10, "g", 1, "A small fishbowl with a cute goldfish swimming inside!")
-    data["items"]["small condo"] = make_item("small condo", 75, "s", 1, "A small sized, partially carpeted kitty condo with room for up to 3 cats!")
+    data["items"]["small condo"] = make_item("small condo", 75, "s", 3, "A small sized, partially carpeted kitty condo with room for up to 3 cats!")
     data["items"]["medium condo"] = make_item("medium condo", 150, "s", 5, "A medium sized kitty condo with full carpeting and room for up to 5 cats!")
     data["items"]["large condo"] = make_item("large condo", 50, "g", 7, "A large sized kitty condo with luxurious berber carpeting, hand stitching, and room for up to 7 cats!")
     data["items"]["bag of catnip"] = make_item("bag of catnip", 7, "g", 1, "A small bag of catnip, the smell drives cats wild!")
@@ -81,7 +81,7 @@ def build_items(data):
     data["items"]["can of fancy food"] = make_item("can of fancy food", 5, "g", 300, "Artisanally hand-crafted fair trade organic cat food, mmmm!")
 
 
-def make_cat(name, desc, treasure, mod):
+def make_cat(name, desc, treasure, mod, time_limit=30, entry_chance=0.1, exclusive=False, fav_toy="", strength=5):
     return {"name": name,
             "desc": desc,
             "time_in_yard": 0,
@@ -90,6 +90,11 @@ def make_cat(name, desc, treasure, mod):
             "in_yard": False,
             "treasure": treasure,
             "given_treasure": False,
+            "time_limit": time_limit,
+            "entry_chance": entry_chance,
+            "fav_toy": fav_toy,
+            "exclusive": exclusive,
+            "strength": strength,
             "mod": mod}
 
 
@@ -102,5 +107,5 @@ def build_cats(data):
     data["cats"]["Gordo"] = make_cat("Gordo", "The most fucking annoying cat, he's always eating your food", "It's a useless piece of wood because Gordo sucks", 0.1)
     data["cats"]["Pukka"] = make_cat("Pukka", "Pukka is a white shorthair with cream splotches and green eyes; she loves to chase lasers and surf", "It's a block of surf wax", 0.1)
     data["cats"]["Peebles"] = make_cat("Peebles", "Peebles is a black and white shorthair with blue eyes; he likes death metal music and piles of catnip", "It's a tortoise shell guitar pick", 0.1)
-    data["cats"]["Tarawa"] = make_cat("Tarawa", "Tarawa is a gray longhair with white streaks and gray eyes; she likes relaxing and chasing birds", "It's a Blue Jay feather", 0.1)
+    data["cats"]["Tarawa"] = make_cat("Tarawa", "Tarawa is a gray longhair with white streaks and gray eyes; she likes relaxing and chasing birds", "It's a Blue Jay feather", 0.1, strength=6)
     data["cats"]["Felix"] = make_cat("Felix", "Felix is an orange and white shorthair tabby with yellow eyes; he is very mellow and mostly meditates all day long", "It's a Buddha incense holder", 0.1)
