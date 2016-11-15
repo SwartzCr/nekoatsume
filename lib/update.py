@@ -73,7 +73,7 @@ def join_toy(data, cat, toy):
 def try_push(data, cat, toy):
     for occupant in toy["occupant"]:
         if data["cats"][occupant]["strength"] < cat["strength"]:
-            remove_cat(data, occupant, toy)
+            remove_cat(data, data["cats"][occupant], toy)
             join_toy(data, cat, toy)
             return
 
@@ -136,6 +136,4 @@ def new_cats(data):
             cat["in_yard"] = True
             if cat["total_time_in_yard"] > 3000 and not cat["given_treasure"]:
                 cat["given_treasure"] = True
-                import pdb
-                pdb.set_trace()
                 data["pending_treasures"].append((cat["name"], cat["treasure"]))
