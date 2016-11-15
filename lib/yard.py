@@ -77,7 +77,7 @@ def cat_activities(data):
     for item in yard_items:
         cats = item[1]
         for cat in cats:
-            printer.p(data["prefix"], "{0} is playing with a {1}".format(cat, item[0]['name']))
+            printer.yard(data["prefix"], "{0} is playing with a {1}".format(cat, item[0]['name']))
 
 def cats(data):
     """Allow you to look at the cats in your yard"""
@@ -91,12 +91,12 @@ def cats(data):
     inp = input("{.YARD}{}{.ENDC} Which cat would you like to look at? ".format(
         printer.PColors, data["prefix"], printer.PColors))
     if inp in cat_names:
-        desc_cat(data, [cat for cat in cats_in_yard if cat["name"] == inp][0])
+        desc_cat(data, [cat for cat in data["cats"] if cat == inp][0])
     else:
         printer.warn(data["prefix"], "I'm sorry that cat isn't in your yard!")
 
 def desc_cat(data, cat):
-    printer.yard(data["prefix"], cat["desc"])
+    printer.yard(data["prefix"], data["cats"][cat]["desc"])
 
 
 def place(data):
