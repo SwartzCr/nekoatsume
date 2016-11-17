@@ -5,7 +5,7 @@ This module controls the item shop and related transactions.
 """
 
 from lib import printer
-DEMARCATION = 6
+DEMARCATION = 15
 
 try:
     input = raw_input

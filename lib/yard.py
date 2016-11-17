@@ -107,7 +107,7 @@ def place(data):
     placable_items = {}
     for item in items_list:
         #deliniate placable items from things like food
-        if item["size"] < 6:
+        if item["size"] < 15:
             placable_items[item["name"]] = item
     data["completer"].set_actions(placable_items.keys())
     printer.yard(data["prefix"], "Here are the items that you can put in your yard: {0}".format(", ".join(placable_items.keys())))
