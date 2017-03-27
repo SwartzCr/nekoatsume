@@ -109,7 +109,7 @@ def pay_up(data, cat):
     amount = cat["time_in_yard"]
     percent = random.randint(5, 10) / 10.0
     money_to_pay = int(round(amount * percent))
-    data["pending_money"].append((cat["name"], money_to_pay))
+    data["pending_money"].append((cat["name"], money_to_pay, "g" if (random.randint(1, 20) == 1) else "s"))
 
 
 def free_up_toy_cat(data, cat):
