@@ -144,7 +144,7 @@ def collect_money(data):
         return
     for i in range(len(data["pending_money"])):
         money = data["pending_money"].pop()
-        currency = money[2];
+        currency = money[2]
         printer.p("{.GREEN}[$$$$$$]{.ENDC}".format(
             printer.PColors,
             printer.PColors), "Yes! {0} left you {1}{2} fish!".format(
