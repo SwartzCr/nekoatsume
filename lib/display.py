@@ -148,7 +148,7 @@ def collect_money(data):
         printer.p("{.GREEN}[$$$$$$]{.ENDC}".format(
             printer.PColors,
             printer.PColors), "Yes! {0} left you {1}{2} fish!".format(
-            money[0], str(money[1]), " gold" if currency == "g" else ""))
+            money[0], str(money[1]), " gold" if currency == "g" else " silver"))
         data[currency + "_fish"] += money[1]
 
 
